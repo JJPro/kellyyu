@@ -1,0 +1,90 @@
+@import "sass_base/variables";
+@import "sass_base/mixins";
+
+// ** clean links ** //
+a {
+  &, &:hover, &:visited, &:focus { text-decoration: none; }
+}
+
+body {-webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;}
+.background-image { background-position: center center; background-size: cover; background-repeat: no-repeat; }
+
+header { position: relative; background-repeat: no-repeat; background-position: top center; background-size: contain;
+  .nav-container {position: absolute; bottom: 0; left: 0; right: 0; font-size: large; font-weight: bold;border-radius: 0; margin-bottom: 0;background: rgba( 255,255,255,0.2); border-top: 1px solid rgba( 255,255,255,0.1);
+    nav.main-navigation {
+      .search-form { display: inline-block; position: relative; padding: 6px 15px; font-size: 1em; transform: translateY(2px);
+        .jk-font.icon-search {position: absolute; left: 22px; top: 13px; }
+        .search-field {padding: .2em .5em .05em 1.5em;border-radius: 2em; background: #fff; border: 1px solid #ccc; line-height: 1.7em; font-size: medium; font-weight: normal;width: 0; opacity: 0; cursor: pointer; @include transition(all, 500ms);
+          &:focus {border-color: #66afe9; outline: 0; box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 5px rgba(102,175,233,.6); width: 150px; opacity: 1; cursor: text; color: #000;}
+        }
+        .search-submit{ display: none; }
+
+
+      }
+    }
+
+  }
+}
+
+/*
+    Nav Bar style
+ */
+// ** clear bootstrap default style ** //
+.nav-tabs>li>a{border: none; border-radius: 0;
+  &:focus, &:hover, &:visited {background-color: transparent; }
+}
+.nav-tabs>li.active>a{border: none; background-color: transparent;
+  &:focus, &:hover, &:visited {border: none; background-color: transparent;}
+}
+// ** establish new rules ** //
+.nav-tabs>li>a {
+  &::after { content: ''; display: block; width: auto; height: 3px; background-color: $header-font-color; opacity: 0; @include transform(translateY(15px)); @include transition(all, 320ms); }
+  &:focus, &:hover, &:visited {
+    &::after { opacity: 1; @include transform(translateY(0)); }
+  }
+}
+.nav-tabs>li.active>a {
+  &, &:focus, &:hover, &:visited {
+    &::after { opacity: 1; @include transform(translateY(0)); height: 4px;}
+  }
+}
+
+.site-content { margin-top: 40px;
+
+}
+
+/*
+    Read More ... Link style
+*/
+a.more-link {padding: 3px 15px; background-color: lighten(red, 15%); color: #FFF; display: block; float: right; border-radius: 2px; }
+
+/*
+    entry meta
+*/
+.entry-meta { text-transform: uppercase; color:$post-title-color; margin-bottom: 15px; font-size: smaller;
+  a {color: $post-title-color;
+    &:hover {color: darken($post-title-color, 20%); }
+  }
+}
+
+/*
+    Entry Title
+*/
+.entry-title { text-transform: capitalize;
+  a {color: $post-title-color; font-weight: bold; font-size: xx-large;}
+}
+
+/*
+    entry
+*/
+// ** general rules ** //
+article.post { margin-top: 20px;
+  &::after {content: ''; display: inline-block; border: 1px solid rgba(149, 152, 154, .25); width: 100%; margin-top: 20px; }
+}
+
+// ** status post format ** //
+article.post.format-status .status-entry-container { background-color: #F4F4F4; position: relative;
+  .post-thumbnail { width: 200px; height: 200px; border-radius: 50%; border: solid 1px #95989A; position: absolute; left: 15px; bottom: 17px;}
+  .entry-content { padding-left: 250px; min-height: 190px; color: $post-title-color; padding-top: 7px;}
+  .entry-footer { height: 36px; background-color:#EAEAEA; font-size: small; margin-bottom: 0; line-height: 36px;}
+}
