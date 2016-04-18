@@ -51,6 +51,51 @@ class JKFrontendUtilities {
 		$origin = geolocator_country();
 		return $origin == '86';
 	}
+
+	// ** queried in the audio post format ** //
+	public function has_ximalaya_audio(){
+		$enabled = get_post_meta(get_the_ID(), '_has_ximalaya_track', true);
+
+		return ($enabled == true);
+	}
+
+	public function get_ximalaya_audio_html(){
+		
+		$data = $this->get_ximalaya_audio_data();
+
+		$html = '<div class="ximalaya-audio">
+					<div class="row no-gutter">
+						<div class="col-xs-4 no-padding-left">
+							<div class="album-cover-container">
+								<div class="album-cover background-image" style="background-image:url(' . $data['cover'] . ');">
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-8 no-padding-right">
+							<div class="title">
+								<h4>' . $data['title'] . '</h4>
+							</div>
+							<div class="player">
+								<audio src="' . $data['mp3'] . '" preload="auto" />
+							</div>
+						</div>
+					</div>
+				</div>';
+		return $html;
+
+	}
+
+	// ** Fetches [album image url, mp3 file url, and track name] ** //
+	private function get_ximalaya_audio_data(){
+
+		$post_id = get_the_ID();
+
+		$data = get_post_meta($post_id, '_ximalaya_track_data', true);
+
+		return $data;
+
+	}
+
 }
 
 

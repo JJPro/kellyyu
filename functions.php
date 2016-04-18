@@ -32,6 +32,8 @@ class JKKellyYuTheme {
 		add_action( 'wp_enqueue_scripts', function(){
 			// ** Scripts ** //
 			wp_enqueue_script( 'bootstrap', get_template_directory_uri() . '/js/bootstrap.min.js', ['jquery-core'], '3.3.6', true );
+			wp_enqueue_script( 'audiojs', get_template_directory_uri() . '/js/lib/audiojs/audio.min.js', false, false, true);
+			wp_enqueue_script( 'app_script', get_template_directory_uri() . '/js/app.min.js', ['jquery-core', 'bootstrap', 'audiojs'], false, true);
 
 			// ** Styles ** //
 			wp_enqueue_style( 'bootstrap', get_template_directory_uri() . '/css/bootstrap.min.css', false, '3.3.6', 'all' );

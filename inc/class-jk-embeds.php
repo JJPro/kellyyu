@@ -9,6 +9,7 @@ class JKEmbeds {
 		$this->neat_youtube();
 		$this->responsive_vimeo();
 		$this->youku_video();
+		// $this->ximalaya();
 	}
 
 	// ** YouTube video without title ** //
@@ -54,4 +55,17 @@ class JKEmbeds {
 			return apply_filters( 'embed_youku', $html, $matches, $attr, $url, $rawattr);
 		});
 	}
+
+	// ** Embed Ximalaya audio ** //
+	/*private function ximalaya() {
+		wp_embed_register_handler( 'embed_handler_ximalaya', '/http:\/\/.*ximalaya.com\/\d+\/sound\/\d+/i', function($matches, $attr, $url, $rawattr){
+//			 error_log(print_r($matches, true));error_log(print_r($attr, true));error_log(print_r($url, true));error_log(print_r($rawattr, true));
+
+			global $jk_utilities;
+
+			$html = $jk_utilities->frontend->get_ximalaya_audio_html( $matches[0] );
+
+			return apply_filters('embed_ximalaya', $html, $matches, $attr, $url, $rawattr);
+		});
+	}*/
 }

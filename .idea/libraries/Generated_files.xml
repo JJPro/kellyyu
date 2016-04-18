@@ -1,0 +1,21 @@
+<component name="libraryTable">
+  <library name="Generated files" type="javaScript">
+    <properties>
+      <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/../../plugins/wavesurfer-wp/js/admin-color-picker.min.js" />
+        <item url="file://$PROJECT_DIR$/../../plugins/wavesurfer-wp/js/download.min.min.js" />
+        <item url="file://$PROJECT_DIR$/js/app.min.js" />
+        <item url="file://$PROJECT_DIR$/../../plugins/wavesurfer-wp/js/wavesurfer-wp.min.js" />
+        <item url="file://$PROJECT_DIR$/../../plugins/wavesurfer-wp/js/wavesurfer.min.min.js" />
+      </sourceFilesUrls>
+    </properties>
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../../plugins/wavesurfer-wp/js/admin-color-picker.min.js" />
+      <root url="file://$PROJECT_DIR$/../../plugins/wavesurfer-wp/js/download.min.min.js" />
+      <root url="file://$PROJECT_DIR$/js/app.min.js" />
+      <root url="file://$PROJECT_DIR$/../../plugins/wavesurfer-wp/js/wavesurfer-wp.min.js" />
+      <root url="file://$PROJECT_DIR$/../../plugins/wavesurfer-wp/js/wavesurfer.min.min.js" />
+    </CLASSES>
+    <SOURCES />
+  </library>
+</component>

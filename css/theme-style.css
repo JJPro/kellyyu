@@ -14,6 +14,16 @@ Usage: @include keyframes(name) {
 a, a:hover, a:visited, a:focus {
   text-decoration: none; }
 
+.row.no-gutter {
+  margin-left: 0;
+  margin-right: 0; }
+
+.no-padding-left {
+  padding-left: 0; }
+
+.no-padding-right {
+  padding-right: 0; }
+
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
@@ -127,7 +137,10 @@ header {
   height: 4px; }
 
 .site-content {
-  margin-top: 40px; }
+  margin-top: 20px; }
+  @media (max-width: 480px) {
+    .site-content {
+      margin-top: 1px; } }
 
 /*
     Read More ... Link style
@@ -178,24 +191,47 @@ article.post {
 article.post.format-status .status-entry-container {
   background-color: #F4F4F4;
   position: relative; }
-  article.post.format-status .status-entry-container .post-thumbnail {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    border: solid 1px #95989A;
+  article.post.format-status .status-entry-container .post-thumbnail-container {
     position: absolute;
-    left: 15px;
-    bottom: 17px; }
+    bottom: 30px;
+    max-width: 150px;
+    z-index: 1; }
+    @media (min-width: 768px) {
+      article.post.format-status .status-entry-container .post-thumbnail-container {
+        bottom: 20px;
+        max-width: 180px; } }
+    article.post.format-status .status-entry-container .post-thumbnail-container .post-thumbnail {
+      border-radius: 50%;
+      border: solid 1px #95989A;
+      padding-top: 100%; }
   article.post.format-status .status-entry-container .entry-content {
-    padding-left: 250px;
-    min-height: 190px;
+    min-height: 130px;
     color: #95989A;
-    padding-top: 7px; }
+    padding-top: 7px;
+    padding-left: 30px; }
+    @media (min-width: 768px) {
+      article.post.format-status .status-entry-container .entry-content {
+        padding-left: 15px; } }
+    @media (min-width: 992px) {
+      article.post.format-status .status-entry-container .entry-content {
+        min-height: 150px; } }
   article.post.format-status .status-entry-container .entry-footer {
     height: 36px;
     background-color: #EAEAEA;
     font-size: small;
     margin-bottom: 0;
     line-height: 36px; }
+
+article.post.format-audio .entry-content {
+  margin-top: 25px; }
+  article.post.format-audio .entry-content .ximalaya-audio .album-cover-container {
+    max-width: 170px; }
+    article.post.format-audio .entry-content .ximalaya-audio .album-cover-container .album-cover {
+      padding-top: 100%; }
+
+.audiojs {
+  width: 100%; }
+  .audiojs .play-pause {
+    width: 35px; }
 
 /*# sourceMappingURL=theme-style.css.map */

@@ -13,8 +13,10 @@ class JKThemeSetup {
 
 		self::add_sidebars(); 
 
+
 		self::shortcodes();
 		self::embeds();
+		self::post_metas();
 
 		self::add_customize_controls(); // customize manager
 
@@ -94,6 +96,11 @@ class JKThemeSetup {
 	private static function embeds() {
 		require_once('class-jk-embeds.php');
 		new JKEmbeds();
+	}
+
+	private static function post_metas() {
+		require_once('class-jk-meta-boxes.php');
+		new JKMetaBoxes();
 	}
 
 }
