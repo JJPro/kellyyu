@@ -24,6 +24,18 @@ a, a:hover, a:visited, a:focus {
 .no-padding-right {
   padding-right: 0; }
 
+.table {
+  display: table; }
+
+.table-cell {
+  display: table-cell; }
+
+.noscroll {
+  overflow: hidden; }
+
+.scroll {
+  overflow: scroll; }
+
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
@@ -48,7 +60,59 @@ header {
     border-radius: 0;
     margin-bottom: 0;
     background: rgba(255, 255, 255, 0.2);
-    border-top: 1px solid rgba(255, 255, 255, 0.1); }
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    -webkit-transition: background 0.3s;
+    -moz-transition: background 0.3s;
+    -ms-transition: background 0.3s;
+    -o-transition: background 0.3s;
+    transition: background 0.3s; }
+    header .nav-container .nav-toggle {
+      position: relative;
+      width: 100%;
+      height: 2.5em;
+      background: transparent;
+      border: none;
+      margin: 0;
+      padding: 0;
+      z-index: 3; }
+      header .nav-container .nav-toggle:focus {
+        outline: none; }
+      header .nav-container .nav-toggle span {
+        position: absolute;
+        width: 2em;
+        height: 4px;
+        background: #FFF;
+        left: 50%;
+        top: 50%;
+        transform: translateX(-50%) translateY(-50%); }
+        header .nav-container .nav-toggle span::before, header .nav-container .nav-toggle span::after {
+          content: '';
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          background: #FFF;
+          left: 0; }
+        header .nav-container .nav-toggle span::before {
+          top: -10px; }
+        header .nav-container .nav-toggle span::after {
+          bottom: -10px; }
+        header .nav-container .nav-toggle span::before {
+          transition-property: top, transform; }
+        header .nav-container .nav-toggle span::after {
+          transition-property: bottom, transform; }
+        header .nav-container .nav-toggle span::before, header .nav-container .nav-toggle span::after {
+          transition-duration: 0.3s, 0.3s;
+          transition-delay: 0.3s, 0s; }
+    header .nav-container.is-active .nav-toggle span {
+      background: none; }
+      header .nav-container.is-active .nav-toggle span::before {
+        top: 0;
+        transform: rotate(45deg); }
+      header .nav-container.is-active .nav-toggle span::after {
+        bottom: 0;
+        transform: rotate(-45deg); }
+      header .nav-container.is-active .nav-toggle span::before, header .nav-container.is-active .nav-toggle span::after {
+        transition-delay: 0s, 0.3s; }
     header .nav-container nav.main-navigation .search-form {
       display: inline-block;
       position: relative;
@@ -224,14 +288,120 @@ article.post.format-status .status-entry-container {
 
 article.post.format-audio .entry-content {
   margin-top: 25px; }
-  article.post.format-audio .entry-content .ximalaya-audio .album-cover-container {
-    max-width: 170px; }
-    article.post.format-audio .entry-content .ximalaya-audio .album-cover-container .album-cover {
-      padding-top: 100%; }
+  article.post.format-audio .entry-content .ximalaya-audio {
+    margin-bottom: 15px; }
+    article.post.format-audio .entry-content .ximalaya-audio .album-cover-container {
+      max-width: 170px; }
+      @media (min-width: 992px) {
+        article.post.format-audio .entry-content .ximalaya-audio .album-cover-container {
+          position: relative;
+          left: 50%;
+          transform: translateX(-50%); } }
+      article.post.format-audio .entry-content .ximalaya-audio .album-cover-container .album-cover {
+        padding-top: 100%; }
+    article.post.format-audio .entry-content .ximalaya-audio .meta-container {
+      height: 90px;
+      position: relative; }
+      article.post.format-audio .entry-content .ximalaya-audio .meta-container .play-pause, article.post.format-audio .entry-content .ximalaya-audio .meta-container .title {
+        display: inline-block;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%); }
+      article.post.format-audio .entry-content .ximalaya-audio .meta-container .play-pause {
+        border-radius: 50%;
+        background-color: #FF5400;
+        color: #FFF;
+        width: 70px;
+        height: 70px;
+        line-height: 70px;
+        text-align: center;
+        font-size: 50px;
+        padding-top: 7px;
+        z-index: 1; }
+        article.post.format-audio .entry-content .ximalaya-audio .meta-container .play-pause:hover {
+          cursor: pointer; }
+        article.post.format-audio .entry-content .ximalaya-audio .meta-container .play-pause.icon-play {
+          padding-left: 8px; }
+        article.post.format-audio .entry-content .ximalaya-audio .meta-container .play-pause.icon-pause {
+          padding-left: 0px; }
+      article.post.format-audio .entry-content .ximalaya-audio .meta-container .title {
+        padding-left: 80px;
+        font-weight: bold;
+        font-size: 15px; }
+    article.post.format-audio .entry-content .ximalaya-audio .player {
+      height: 50px;
+      width: 100%;
+      background-color: rgba(204, 204, 204, 0.66);
+      border-radius: 4px;
+      margin-top: 10px; }
+      article.post.format-audio .entry-content .ximalaya-audio .player .current-time, article.post.format-audio .entry-content .ximalaya-audio .player .scrubber, article.post.format-audio .entry-content .ximalaya-audio .player .duration {
+        width: 100%; }
+      article.post.format-audio .entry-content .ximalaya-audio .player .current-time, article.post.format-audio .entry-content .ximalaya-audio .player .duration {
+        line-height: 50px;
+        font-weight: bold;
+        opacity: 0.7; }
+      article.post.format-audio .entry-content .ximalaya-audio .player .current-time {
+        color: #FF3300; }
+      article.post.format-audio .entry-content .ximalaya-audio .player .duration {
+        color: #666; }
+      article.post.format-audio .entry-content .ximalaya-audio .player .scrubber {
+        height: 40px;
+        background-color: #FFF;
+        margin: 5px 0;
+        position: relative;
+        border-radius: 0; }
+        article.post.format-audio .entry-content .ximalaya-audio .player .scrubber .loaded, article.post.format-audio .entry-content .ximalaya-audio .player .scrubber .progress, article.post.format-audio .entry-content .ximalaya-audio .player .scrubber .cursor-move, article.post.format-audio .entry-content .ximalaya-audio .player .scrubber .error-message {
+          height: 40px;
+          position: absolute;
+          border-radius: 0; }
+        article.post.format-audio .entry-content .ximalaya-audio .player .scrubber .loaded {
+          background-color: #F4F4F4; }
+        article.post.format-audio .entry-content .ximalaya-audio .player .scrubber .progress {
+          background-color: #F53C00;
+          opacity: .89; }
+        article.post.format-audio .entry-content .ximalaya-audio .player .scrubber .cursor-move {
+          background-color: #F53C00;
+          opacity: .4; }
+        article.post.format-audio .entry-content .ximalaya-audio .player .scrubber .error-message {
+          background-color: #92969B;
+          opacity: .5;
+          z-index: 1;
+          line-height: 40px;
+          color: #FFF;
+          width: 100%;
+          display: none; }
+      @media (min-width: 768px) {
+        article.post.format-audio .entry-content .ximalaya-audio .player {
+          width: 59%;
+          position: absolute;
+          transform: translateY(-61px) translateX(6px); } }
+      @media (min-width: 992px) {
+        article.post.format-audio .entry-content .ximalaya-audio .player {
+          width: 68%;
+          transform: translateY(-61px) translateX(-45px); } }
+      @media (min-width: 1200px) {
+        article.post.format-audio .entry-content .ximalaya-audio .player {
+          width: 70%;
+          transform: translateY(-75px) translateX(-55px); } }
+article.post.format-audio .entry-footer {
+  margin-top: 20px; }
 
-.audiojs {
-  width: 100%; }
-  .audiojs .play-pause {
-    width: 35px; }
+@media (max-width: 768px) {
+  header .nav-container {
+    background-color: rgba(0, 0, 0, 0.15);
+    transition-delay: 0.3s; }
+    header .nav-container .main-navigation {
+      position: absolute;
+      background-color: rgba(0, 0, 0, 0.9);
+      z-index: 2;
+      display: none; }
+      header .nav-container .main-navigation ul {
+        margin: 2em auto; }
+      header .nav-container .main-navigation li {
+        display: block;
+        width: 100%; }
+    header .nav-container.is-active {
+      background-color: rgba(0, 0, 0, 0.9);
+      transition-delay: 0s; } }
 
 /*# sourceMappingURL=theme-style.css.map */

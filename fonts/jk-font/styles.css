@@ -41,3 +41,15 @@
 .icon-search:before {
   content: "\61";
 }
+.icon-pause:before {
+  content: "\64";
+}
+.icon-play:before {
+  content: "\65";
+}
+.icon-loading:before {
+  content: "\66";
+}
+.icon-error:before {
+  content: "\62";
+}

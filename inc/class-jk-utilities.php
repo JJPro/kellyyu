@@ -65,21 +65,46 @@ class JKFrontendUtilities {
 
 		$html = '<div class="ximalaya-audio">
 					<div class="row no-gutter">
-						<div class="col-xs-4 no-padding-left">
+						<div class="col-xs-4 col-md-3 no-padding-left">
 							<div class="album-cover-container">
 								<div class="album-cover background-image" style="background-image:url(' . $data['cover'] . ');">
 								</div>
 							</div>
 						</div>
-						<div class="col-xs-8 no-padding-right">
-							<div class="title">
-								<h4>' . $data['title'] . '</h4>
+						<div class="col-xs-8 col-md-9 no-padding-right">
+
+							<div class="meta-container">
+								<span class="play-pause jk-icon icon-play"></span>
+
+								<span class="title">
+									' . $data['title'] . '
+								</span>
 							</div>
-							<div class="player">
-								<audio src="' . $data['mp3'] . '" preload="auto" />
+
+						</div> <!-- .col-xs-8 -->
+					</div> <!-- .row -->
+					<div class="player col-sm-8 col-sm-offset-4">
+						<audio src="' . $data['mp3'] . '" preload="metadata" ></audio>
+						
+						<div class="row">
+							<div class="col-xs-2 no-padding-right no-padding-left">
+								<div class="current-time text-center">00:00</div>
 							</div>
+							<div class="col-xs-8 no-padding-left no-padding-right">
+								<div class="scrubber">
+									<div class="loaded"></div>
+									<div class="cursor-move"></div>
+									<div class="progress"></div>
+									<div class="error-message text-center"></div>
+								</div> 
+							</div>
+							<div class="col-xs-2 no-padding-left no-padding-right">
+								<div class="duration text-center">00:00</div>
+							</div>
+
 						</div>
-					</div>
+
+					</div> <!-- .player -->
 				</div>';
 		return $html;
 

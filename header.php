@@ -29,19 +29,22 @@ global $jk_utilities;
 			<header id="masthead" class="text-center" role="banner" style="background-image: url(<?php header_image();?>); width: 100%; padding-top: <?php echo $jk_utilities->admin->get_header_img_width_height_rate(); ?>;">
 				<div class="nav-container">
 
-					<div class="container">
-						<div class="row">
-							<nav id="site-navigation" class="main-navigation" role="navigation">
+					<div class="container no-padding-left no-padding-right">
 
-								<?php wp_nav_menu( array(
-												'theme_location' => 'primary',
-												'container' => false,
-												'menu_class' => 'nav nav-tabs', 
-												'walker' => new Sunset_Walker_Nav_Primary()
-												) ); ?>
-							</nav><!-- #site-navigation -->
+						<button type="button" class="nav-toggle hidden-lg hidden-md hidden-sm">
+							<span></span>
+						</button>
 
-						</div>
+						<nav id="site-navigation" class="main-navigation" role="navigation">
+
+							<?php wp_nav_menu( array(
+											'theme_location' => 'primary',
+											'container' => false,
+											'menu_class' => 'nav nav-tabs', 
+											'walker' => new Sunset_Walker_Nav_Primary()
+											) ); ?>
+						</nav><!-- #site-navigation -->
+
 					</div>
 				</div> <!-- .nav-container -->
 			</header><!-- #masthead -->
