@@ -55,7 +55,7 @@ header {
     bottom: 0;
     left: 0;
     right: 0;
-    font-size: large;
+    font-size: medium;
     font-weight: bold;
     border-radius: 0;
     margin-bottom: 0;
@@ -153,6 +153,9 @@ header {
 /*
     Nav Bar style
  */
+.nav-tabs {
+  border-bottom: none; }
+
 .nav-tabs > li > a {
   border: none;
   border-radius: 0; }
@@ -165,6 +168,9 @@ header {
   .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:visited {
     border: none;
     background-color: transparent; }
+
+.nav-tabs {
+  display: inline-block; }
 
 .nav-tabs > li > a::after {
   content: '';
@@ -251,6 +257,8 @@ article.post {
     border: 1px solid rgba(149, 152, 154, 0.25);
     width: 100%;
     margin-top: 20px; }
+  article.post:last-of-type::after {
+    display: none; }
 
 article.post.format-status .status-entry-container {
   background-color: #F4F4F4;
@@ -386,7 +394,7 @@ article.post.format-audio .entry-content {
 article.post.format-audio .entry-footer {
   margin-top: 20px; }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   header .nav-container {
     background-color: rgba(0, 0, 0, 0.15);
     transition-delay: 0.3s; }
@@ -394,14 +402,64 @@ article.post.format-audio .entry-footer {
       position: absolute;
       background-color: rgba(0, 0, 0, 0.9);
       z-index: 2;
-      display: none; }
-      header .nav-container .main-navigation ul {
-        margin: 2em auto; }
+      width: 100%;
+      max-height: 0;
+      overflow: hidden;
+      transition-property: max-height;
+      transition-duration: 0.6s;
+      transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+      header .nav-container .main-navigation ul:last-of-type {
+        margin-bottom: 2em; }
       header .nav-container .main-navigation li {
         display: block;
         width: 100%; }
+        header .nav-container .main-navigation li .search-form .search-field:focus {
+          width: 300px; }
+    header .nav-container.is-active .main-navigation {
+      max-height: 500px; }
     header .nav-container.is-active {
       background-color: rgba(0, 0, 0, 0.9);
       transition-delay: 0s; } }
+.widget-area {
+  margin-top: 10px; }
+  .widget-area li {
+    list-style: none; }
+    .widget-area li .widgettitle {
+      display: none; }
+    .widget-area li .textwidget {
+      text-align: center; }
+
+#jk-social-widget #jk-social-widget-tabs ul.ui-tabs-nav {
+  display: block;
+  text-align: center;
+  font-size: 3em;
+  padding: 0; }
+  #jk-social-widget #jk-social-widget-tabs ul.ui-tabs-nav li {
+    display: inline-block; }
+    #jk-social-widget #jk-social-widget-tabs ul.ui-tabs-nav li a:focus {
+      outline: none; }
+      #jk-social-widget #jk-social-widget-tabs ul.ui-tabs-nav li a:focus .jk-icon {
+        border-radius: 50%; }
+#jk-social-widget #jk-social-widget-tabs #official-account, #jk-social-widget #jk-social-widget-tabs #taiwan-fans-account {
+  margin: 20px 0; }
+
+.site-footer {
+  margin: 60px auto 10px; }
+  .site-footer #menu-footer {
+    list-style: none;
+    padding: 0;
+    font-size: small;
+    margin-bottom: 0; }
+    .site-footer #menu-footer li {
+      display: inline; }
+      .site-footer #menu-footer li:after {
+        content: ' | ';
+        color: gray; }
+      .site-footer #menu-footer li:last-child:after {
+        display: none; }
+  .site-footer .site-info {
+    color: darkgray;
+    font-size: smaller;
+    margin-top: 15px; }
 
 /*# sourceMappingURL=theme-style.css.map */

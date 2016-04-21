@@ -22,6 +22,7 @@ global $jk_utilities;
 </head>
 
 <body <?php body_class(); ?>>
+<?php do_action('jk_body_start'); ?>
 <div id="page" class="site">
 	<div class="container-fluid">
 		<div class="row">
@@ -42,7 +43,14 @@ global $jk_utilities;
 											'container' => false,
 											'menu_class' => 'nav nav-tabs', 
 											'walker' => new Sunset_Walker_Nav_Primary()
-											) ); ?>
+							)); ?>
+							<?php wp_nav_menu( array(
+											'theme_location' => 'primary-visible-xs',
+											'container' => false,
+											'menu_class' => 'nav nav-tabs hidden-sm', 
+											'walker' => new Sunset_Walker_Nav_Primary()
+							)); ?>
+
 						</nav><!-- #site-navigation -->
 
 					</div>

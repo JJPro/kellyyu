@@ -12,6 +12,8 @@ class JKThemeSetup {
 		self::append_search_box_to_primary_menu();
 
 		self::add_sidebars(); 
+		self::facebook_integration_js();
+		self::widgets();
 
 
 		self::shortcodes();
@@ -43,6 +45,7 @@ class JKThemeSetup {
 	private static function register_nav_menus() {
 		register_nav_menus(array(
 		    'primary' => 'Primary Nav Menu', 
+		    'primary-visible-xs' => 'Right After Primary Nav Menu, but only shows on small devices',
 		    'footer' => 'Footer Menu'
 		));
 	}
@@ -101,6 +104,29 @@ class JKThemeSetup {
 	private static function post_metas() {
 		require_once('class-jk-meta-boxes.php');
 		new JKMetaBoxes();
+	}
+
+	private static function facebook_integration_js() {
+		add_action('jk_body_start', function(){
+			?>
+				<div id="fb-root"></div>
+				<script>(function(d, s, id) {
+				  var js, fjs = d.getElementsByTagName(s)[0];
+				  if (d.getElementById(id)) return;
+				  js = d.createElement(s); js.id = id;
+				  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=391602454372029";
+				  fjs.parentNode.insertBefore(js, fjs);
+				}(document, 'script', 'facebook-jssdk'));
+				</script>
+			<?php 
+		});
+	}
+
+	private static function widgets() {
+		require_once('class-jk-social-widget.php');
+		add_action('widgets_init', function(){
+			register_widget('JKSocialWidget');
+		});
 	}
 
 }
