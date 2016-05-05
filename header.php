@@ -32,7 +32,7 @@ global $jk_utilities;
 
 					<div class="container no-padding-left no-padding-right">
 
-						<button type="button" class="nav-toggle hidden-lg hidden-md hidden-sm">
+						<button type="button" class="nav-toggle hidden-lg hidden-md">
 							<span></span>
 						</button>
 
@@ -47,7 +47,7 @@ global $jk_utilities;
 							<?php wp_nav_menu( array(
 											'theme_location' => 'primary-visible-xs',
 											'container' => false,
-											'menu_class' => 'nav nav-tabs hidden-sm', 
+											'menu_class' => 'nav nav-tabs', // deleted  'hidden-sm',
 											'walker' => new Sunset_Walker_Nav_Primary()
 							)); ?>
 

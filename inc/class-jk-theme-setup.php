@@ -10,18 +10,23 @@ class JKThemeSetup {
 		self::customize_title_tag(); // <title> in <head> element
 		self::register_nav_menus();
 		self::append_search_box_to_primary_menu();
+		self::wechat_img();
+		self::ios_icons();
 
 		self::add_sidebars(); 
 		self::facebook_integration_js();
 		self::widgets();
 
 
-		self::shortcodes();
 		self::embeds();
+		self::shortcodes();
 		self::post_metas();
 
 		self::add_customize_controls(); // customize manager
 
+
+		self::google_analytics();
+		self::google_page_level_ads();
 	}
 
 	private static function theme_supports() {
@@ -129,4 +134,54 @@ class JKThemeSetup {
 		});
 	}
 
+	private static function wechat_img(){
+		add_action('jk_body_start', function(){
+			global $jk_utilities;
+			echo $jk_utilities->frontend->wechat_image_html();
+		});
+	}
+
+	private static function ios_icons() {
+		add_action('wp_head', function(){
+			$img_dir = get_template_directory_uri() . '/img/';
+			?>
+				<link rel="apple-touch-icon" sizes="57x57" href="<?php echo $img_dir; ?>ios-icon-57x57.png" />
+				<link rel="apple-touch-icon" sizes="72x72" href="<?php echo $img_dir; ?>ios-icon-72x72.png" />
+				<link rel="apple-touch-icon" sizes="114x114" href="<?php echo $img_dir; ?>ios-icon-114x114.png" />
+				<link rel="apple-touch-icon" sizes="144x144" href="<?php echo $img_dir; ?>ios-icon-144x144.png" />
+			<?php
+		});
+	}
+
+	private static function google_analytics() {
+		add_action('jk_body_start', function() {
+			?>
+				<!-- Google Analytics -->
+				<script>
+				  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+				  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+				  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+				  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+				  ga('create', 'UA-38993331-3', 'auto');
+				  ga('send', 'pageview');
+
+				</script>
+			<?php
+		});
+	}
+
+	private static function google_page_level_ads(){
+		add_action('wp_head', function(){
+			?>
+			<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+			<script>
+				(adsbygoogle = window.adsbygoogle || []).push({
+					google_ad_client: "ca-pub-0919081176944377",
+					enable_page_level_ads: true
+				});
+			</script>
+			<?php
+		});
+	}
 }

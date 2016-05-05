@@ -17,9 +17,9 @@ class JKKellyYuTheme {
 
 	private function includes() {
 		require_once('inc/globals.php');
+		require_once('inc/walker.php');
 		require_once('inc/class-jk-utilities.php'); 
 		require_once('inc/class-jk-theme-setup.php'); // structure setup
-		require_once('inc/walker.php');
 
 	}
 

@@ -6,22 +6,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 class JKEmbeds {
 
 	public function __construct() {
-		$this->neat_youtube();
+		$this->clean_youtube();
 		$this->responsive_vimeo();
 		$this->youku_video();
-		// $this->ximalaya();
 	}
 
 	// ** YouTube video without title ** //
-	private function neat_youtube() {	
-		add_filter('oembed_result', function($html, $src, $args){
+	private function clean_youtube() {
 
+		add_filter('embed_oembed_html', function($html, $src, $args){
 
 			if ( strpos( $src, 'www.youtube.com') != false ) {
-				$html = preg_replace( '/(src=(\S+))(?=")/', '$1&showinfo=0', $html);
-				$html = '<div class="embed-responsive embed-responsive-16by9">' . $html . '</div>';
+				$html = preg_replace( '/(src=(\S+))(?=")/', '$1&showinfo=0&rel=0', $html);
 			}
 
+			$html = '<div class="embed-responsive embed-responsive-16by9">' . $html . '</div>';
 			return $html;
 		}, 10, 3);
 	}
@@ -56,16 +55,4 @@ class JKEmbeds {
 		});
 	}
 
-	// ** Embed Ximalaya audio ** //
-	/*private function ximalaya() {
-		wp_embed_register_handler( 'embed_handler_ximalaya', '/http:\/\/.*ximalaya.com\/\d+\/sound\/\d+/i', function($matches, $attr, $url, $rawattr){
-//			 error_log(print_r($matches, true));error_log(print_r($attr, true));error_log(print_r($url, true));error_log(print_r($rawattr, true));
-
-			global $jk_utilities;
-
-			$html = $jk_utilities->frontend->get_ximalaya_audio_html( $matches[0] );
-
-			return apply_filters('embed_ximalaya', $html, $matches, $attr, $url, $rawattr);
-		});
-	}*/
 }

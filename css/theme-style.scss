@@ -7,6 +7,12 @@ a {
   &, &:hover, &:visited, &:focus { text-decoration: none; }
 }
 
+// ** reset icon fonts line height ** //
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+  line-height: inherit !important;
+}
+
 .row.no-gutter {margin-left:0;margin-right:0;}
 .no-padding-left {padding-left: 0;}
 .no-padding-right {padding-right: 0; }
@@ -14,12 +20,15 @@ a {
 .table-cell {display:table-cell;}
 .noscroll {overflow: hidden;}
 .scroll {overflow: scroll;}
+.screen-reader-text {width:0; height:0; position: absolute !important; overflow: hidden;}
+.embed-responsive-ipad-portrait {padding-bottom: 133.3%;}
 
 body {-webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;}
 .background-image { background-position: center center; background-size: cover; background-repeat: no-repeat; }
 
 header { position: relative; background-repeat: no-repeat; background-position: top center; background-size: contain;
   .nav-container {position: absolute; bottom: 0; left: 0; right: 0; font-size: medium; font-weight: bold;border-radius: 0; margin-bottom: 0;background: rgba( 255,255,255,0.2); border-top: 1px solid rgba( 255,255,255,0.1); @include transition(background, 0.3s);
+    // ** make up the sandwich ** //
     .nav-toggle {position: relative; width: 100%; height: 2.5em; background: transparent; border: none; margin: 0; padding: 0; z-index:3;
       &:focus {outline: none;}
       span {position: absolute; width: 2em; height: 4px; background: #FFF; left: 50%; top: 50%; transform: translateX(-50%) translateY(-50%);
@@ -33,6 +42,7 @@ header { position: relative; background-repeat: no-repeat; background-position: 
         &::before, &::after { transition-duration: 0.3s, 0.3s; transition-delay: 0.3s, 0s; }
       }
     }
+    // ** animate sandwich ** //
     &.is-active .nav-toggle {
       span{
         background: none;
@@ -42,9 +52,10 @@ header { position: relative; background-repeat: no-repeat; background-position: 
       }
     }
 
+    // ** style and animate search control ** //
     nav.main-navigation {
       .search-form { display: inline-block; position: relative; padding: 6px 15px; font-size: 1em; transform: translateY(2px);
-        .jk-font.icon-search {position: absolute; left: 22px; top: 13px; }
+        .jk-font.icon-search {position: absolute; left: 22px; top: 9px; }
         .search-field {padding: .2em .5em .05em 1.5em;border-radius: 2em; background: #fff; border: 1px solid #ccc; line-height: 1.7em; font-size: medium; font-weight: normal;width: 0; opacity: 0; cursor: pointer; @include transition(all, 500ms);
           &:focus {border-color: #66afe9; outline: 0; box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 5px rgba(102,175,233,.6); width: 150px; opacity: 1; cursor: text; color: #000;}
         }
@@ -92,7 +103,7 @@ a.more-link {padding: 3px 15px; background-color: lighten(red, 15%); color: #FFF
 /*
     entry meta
 */
-.entry-meta { text-transform: uppercase; color:$post-title-color; margin-bottom: 15px; font-size: smaller;
+.entry-meta { text-transform: uppercase; color:$post-title-color; /*margin-bottom: 15px;*/ font-size: smaller;
   a {color: $post-title-color;
     &:hover {color: darken($post-title-color, 20%); }
   }
@@ -102,7 +113,7 @@ a.more-link {padding: 3px 15px; background-color: lighten(red, 15%); color: #FFF
     Entry Title
 */
 .entry-title { text-transform: capitalize;
-  a {color: $post-title-color; font-weight: bold; font-size: xx-large;}
+  a {color: $post-title-color; font-weight: bold; font-size: x-large;}
 }
 
 /*
@@ -110,13 +121,13 @@ a.more-link {padding: 3px 15px; background-color: lighten(red, 15%); color: #FFF
 */
 // ** general rules ** //
 article.post { margin-top: 20px;
-  &::after {content: ''; display: inline-block; border: 1px solid rgba(149, 152, 154, .25); width: 100%; margin-top: 20px; }
+  &::after {content: ''; display: inline-block; border: 1px solid rgba(149, 152, 154, .25); width: 100%; }
   &:last-of-type::after {display: none;}
 }
 
 // ** status post format ** //
 article.post.format-status .status-entry-container { background-color: #F4F4F4; position: relative;
-  .post-thumbnail-container { position: absolute; bottom: 30px; max-width: 150px; z-index: 1; @media (min-width: $screen-sm-min) {bottom: 20px; max-width: 180px;}
+  .post-thumbnail-container { position: absolute; bottom: 30px; max-width: 150px; z-index: 1; @media (min-width: $screen-sm-min) {bottom: 10px; max-width: 180px;} @media (min-width: $screen-md-min) {bottom: 20px;}
     .post-thumbnail { border-radius: 50%; border: solid 1px #95989A; padding-top: 100%; }
   }
   .entry-content { min-height: 130px; color: $post-title-color; padding-top: 7px; padding-left: 30px; @media (min-width: $screen-sm-min) { padding-left: 15px;} @media (min-width: $screen-md-min) {min-height:150px;}}
@@ -126,14 +137,14 @@ article.post.format-status .status-entry-container { background-color: #F4F4F4; 
 // ** audio post format ** //
 article.post.format-audio {
   .entry-content {margin-top: 25px;
-    .ximalaya-audio { margin-bottom: 15px;
+    .external-audio { margin-bottom: 15px;
       .album-cover-container {max-width: 170px; @media (min-width: $screen-md-min) {position:relative; left:50%; transform:translateX(-50%);}
         .album-cover {padding-top: 100%;}
       }
 
       .meta-container { height: 90px; position: relative;
         .play-pause, .title { display: inline-block; position: absolute; top: 50%; transform: translateY(-50%);}
-        .play-pause {border-radius: 50%; background-color: #FF5400; color: #FFF; width: 70px; height: 70px; line-height:70px; text-align: center;font-size:50px;padding-top:7px; z-index: 1;
+        .play-pause {border-radius: 50%; background-color: #FF5400; color: #FFF; width: 70px; height: 70px; line-height:70px; text-align: center;font-size:50px; z-index: 1;
           &:hover{cursor: pointer;}
           &.icon-play {padding-left: 8px;}
           &.icon-pause {padding-left: 0px;}
@@ -164,19 +175,25 @@ article.post.format-audio {
   .entry-footer {margin-top: 20px;}
 }
 
-// ** primary navigation on small screens ** //
-@media (max-width: $screen-sm-max) {
+// ** video post format ** //
+article.post.format-video {
+  .entry-content {margin-top: 5px;}
+}
+
+// ** primary navigation on small & md screens ** //
+@media (max-width: $screen-md-max) {
   header .nav-container { background-color: rgba(0,0,0,0.15); transition-delay: 0.3s;
-    .main-navigation { position:absolute;background-color: rgba(0,0,0,0.9); z-index:2; width: 100%; max-height: 0;overflow:hidden; transition-property: max-height; transition-duration: 0.6s; transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-      ul:last-of-type { margin-bottom: 2em; }
-      li {display: block; width: 100%;
+    .main-navigation { position:absolute; left: 0; background-color: rgba(0,0,0,0.9); z-index:2; width: 100%; max-height: 0;overflow:hidden; transition-property: max-height; transition-duration: 0.6s; transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      ul {display: block;}
+      ul:last-of-type { margin-bottom: 2em; } // add some margin below menu
+      li {display: block; width: 100%; // stretch each menu item to take up the full width
         .search-form {
           .search-field:focus {width:300px;}
         }
       }
     }
-    &.is-active .main-navigation {max-height:500px; }
-    &.is-active { background-color: rgba(0,0,0,0.9); transition-delay: 0s;
+    &.is-active .main-navigation {max-height:500px; } // animate max-height, because animating height doesn't work
+    &.is-active { background-color: rgba(0,0,0,0.9); transition-delay: 0s; // animate background
 
     }
 
@@ -186,8 +203,9 @@ article.post.format-audio {
 
 // ** Widgets ** //
 .widget-area{ margin-top: 10px;
+  ul {padding-left: 0;}
   li { list-style: none;
-    .widgettitle {display: none;}
+    .widgettitle {font-size: large; text-align: center;}
     .textwidget { text-align: center;
     }
   }
@@ -196,11 +214,16 @@ article.post.format-audio {
 
 // ** Kelly's Social Widget ** //
 #jk-social-widget #jk-social-widget-tabs {
+  #sb_instagram {overflow: scroll !important;}
   ul.ui-tabs-nav { display: block; text-align: center; font-size: 3em; padding: 0;
     li { display: inline-block;
-      a:focus {outline: none;
-        .jk-icon {border-radius: 50%;}
+      a:focus {outline: none; }
+      .jk-icon {
+        &.icon-instagram {color: #517FA4;}
+        &.icon-facebook-square {color: #3B5997;}
+        &.icon-images {color: #8f5dac;}
       }
+
     }
   }
   #official-account, #taiwan-fans-account {margin: 20px 0;}
@@ -237,3 +260,41 @@ article.post.format-audio {
     margin-top: 15px;
   }
 }
+
+// ** Single ** //
+nav.post-navigation{ margin-top: 20px; font-size: medium;
+  .screen-reader-text {display: none;}
+  .nav-links {
+    .nav-previous, .nav-next {display: inline-block;}
+    .nav-previous {float: left;}
+    .nav-next {float: right;}
+  }
+}
+
+// ** Pagination ** //
+nav.pagination {width: 100%;
+  .nav-links { text-align: center; position: relative;
+    .prev, .next {position: absolute; overflow: hidden;}
+    .prev {left: 0; }
+    .next {right: 0; }
+    .page-numbers { padding: 5px 10px;}
+  }
+
+}
+
+// ** Post Navigation ** //
+.post-navigation {
+  &::after {content:''; display: table; clear: both;} // clearfix
+}
+
+// ** image wall page ** //
+.image-wall-page .entry-content { text-align: center;
+  .page-views-container { border-radius: 4px; background-color: rgba(118, 85, 136, .9); position: relative; display: inline-block; min-width: 100px; padding: 17px 15px; margin-bottom: 5px;
+    span.page-views {color: #FFF; font-size: 25px; font-weight: bold; width: 100%; text-align: center; display: inline-block; transform:translateY(-13px);}
+    &::after {display: block; content: 'Views'; position: absolute; bottom: 0; left: 0; color: #FFF; width: 100%; height: 26px; text-align: center; border-top: 2px solid #FFF; font-size: 14px; font-weight: bold;}
+  }
+}
+
+// ** Google Ads ** //
+ins.adsbygoogle {margin: 10px auto;}
+

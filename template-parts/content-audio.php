@@ -13,8 +13,8 @@ global $jk_utilities;
 	
 	<div class="entry-content">
 		
-		<?php if ($jk_utilities->frontend->has_ximalaya_audio()): ?>
-			<?php echo $jk_utilities->frontend->get_ximalaya_audio_html(); ?>
+		<?php if ($jk_utilities->frontend->has_external_audio()): ?>
+			<?php echo $jk_utilities->frontend->get_external_audio_html(); ?>
 		<?php endif; ?>
 		<?php the_content( '阅读整篇文章' ); ?>
 		

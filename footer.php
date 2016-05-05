@@ -12,14 +12,15 @@
 ?>
 
 	<footer id="colophon" class="site-footer text-center" role="contentinfo">
-
-		<div class="row">
-	        <div class="col-xs-12">
-	            <?php
-	            if (has_nav_menu('footer'))
-	                wp_nav_menu( array('theme_location' => 'footer') );
-	            ?>
-	        </div>
+		<div class="container">
+			<div class="row">
+		        <div class="col-xs-12">
+		            <?php
+		            if (has_nav_menu('footer'))
+		                wp_nav_menu( array('theme_location' => 'footer') );
+		            ?>
+		        </div>
+		    </div>
 	    </div>
 		<div class="site-info">
 			<?php printf( esc_html__( 'Proudly powered by %s', 'kellyyu_1-0' ), 'WordPress' ); ?>
