@@ -65,7 +65,6 @@ class JKFrontendUtilities {
 		return "$date / $cats_string"; // removed $comment_count
 	}
 
-	// ** In the LOOP ** //
 	public function wechat_image_html(){
 
 		$img_url = '';
@@ -99,6 +98,24 @@ class JKFrontendUtilities {
 				</div>';
 
 		return $html;
+	}
+
+	public function facebook_image_html(){
+		if ( is_home() || is_front_page() ){
+			// site icon
+			$img_url = get_site_icon_url();
+
+		} else {
+			// use page thumbnail if exists
+			$img_url = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
+			if ($img_url) {
+				$img_url = $img_url[0];
+			}
+		}
+
+		if ($img_url) {
+			return '<meta property="og:image" content="' . $img_url . '" />';
+		}
 	}
 
 	public function is_user_from_mainland_china() {

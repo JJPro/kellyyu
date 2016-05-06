@@ -112,9 +112,7 @@ a.more-link {padding: 3px 15px; background-color: lighten(red, 15%); color: #FFF
 /*
     Entry Title
 */
-.entry-title { text-transform: capitalize;
-  a {color: $post-title-color; font-weight: bold; font-size: x-large;}
-}
+.entry-title { text-transform: capitalize; color: $post-title-color; font-weight: bold; font-size: x-large;}
 
 /*
     entry

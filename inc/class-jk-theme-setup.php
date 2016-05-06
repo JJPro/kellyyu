@@ -11,6 +11,8 @@ class JKThemeSetup {
 		self::register_nav_menus();
 		self::append_search_box_to_primary_menu();
 		self::wechat_img();
+		self::facebook_img(); // Facebook Sharing image
+		self::facebook_video_oembed_provider();
 		self::ios_icons();
 
 		self::add_sidebars(); 
@@ -141,6 +143,13 @@ class JKThemeSetup {
 		});
 	}
 
+	private static function facebook_img(){
+		add_action('wp_head', function(){
+			global $jk_utilities;
+			echo $jk_utilities->frontend->facebook_image_html();
+		});
+	}
+
 	private static function ios_icons() {
 		add_action('wp_head', function(){
 			$img_dir = get_template_directory_uri() . '/img/';
@@ -182,6 +191,19 @@ class JKThemeSetup {
 				});
 			</script>
 			<?php
+		});
+	}
+
+	private static function facebook_video_oembed_provider(){
+		add_action('init', function(){
+			$endpoints = array(
+				'#https?://www\.facebook\.com/video.php.*#i'          => 'https://www.facebook.com/plugins/video/oembed.json/',
+				'#https?://www\.facebook\.com/.*/videos/.*#i'         => 'https://www.facebook.com/plugins/video/oembed.json/',
+			);
+
+			foreach($endpoints as $pattern => $endpoint) {
+				wp_oembed_add_provider( $pattern, $endpoint, true );
+			}
 		});
 	}
 }

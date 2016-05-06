@@ -10,9 +10,12 @@ global $jk_utilities;
 		<!-- <div class="embed-responsive embed-responsive-16by9"> -->
 			<?php /*echo sunset_get_embedded_media( array('video','iframe') );*/ ?>
 		<!-- </div> -->
-		
-		<?php the_title( '<h1 class="entry-title"><a href="'. esc_url( get_permalink() ) .'" rel="bookmark">', '</a></h1>'); ?>
-		
+		<?php if (is_single()): ?>
+			<?php the_title( '<h1 class="entry-title">', '</h1>'); ?>
+		<?php else: ?>
+			<?php the_title( '<h1 class="entry-title"><a href="'. esc_url( get_permalink() ) .'" rel="bookmark">', '</a></h1>'); ?>
+		<?php endif; ?>
+
 		<div class="entry-meta">
 			<?php echo $jk_utilities->frontend->posted_meta(); ?>
 		</div>

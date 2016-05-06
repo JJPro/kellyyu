@@ -7,6 +7,7 @@ class JKShortcodes {
 
 	public function __construct() {
 		$this->youku_youtube_mix();
+		$this->text_mix();
 		$this->views_count();
 		$this->google_ads();
 	}
@@ -18,24 +19,53 @@ class JKShortcodes {
 			$defaults = array(
 				'youtube' => '',
 				'youku' => '',
+				'facebook' => '',
 				'responsive_class' => 'embed-responsive-16by9',
 			);
 			$atts = shortcode_atts($defaults, $atts);
 
-			if (isset($_GET['youku'])) { // for testing youku service from outside mainland
+			if (isset($_GET['youku']) || $jk_utilities->frontend->is_user_from_mainland_china() ) { // for testing youku service from outside mainland
 				$video = $atts['youku'];
+
+				$matches = array();
+				preg_match('/v_show\/id_(.*?).html/i', $video, $matches);
+				$src = 'http://player.youku.com/embed/' . $matches[1];
+
+				$embed_html = '<iframe width=800 height=450 src="' . esc_attr($src) . '" frameorder=0 allowfullscreen></iframe>';
+
 			} else {
-				
-				if ($jk_utilities->frontend->is_user_from_mainland_china())
-					$video = $atts['youku'];
-				else 
-					$video = $atts['youtube'];
+				$video = $atts['youtube'] ? $atts['youtube'] : $atts['facebook'];
+
+				error_log( $video );
+
+				$embed_html = wp_oembed_get( $video, array('width' => '800', 'height' => '450'));
+				if ($video == $atts['youtube'])
+					$embed_html = preg_replace('/(src="[^"]+)/i', '$1&rel=0&showinfo=0', $embed_html);
 			}
 
-			$html = apply_filters('the_content', $video);
-			error_log($html);
-			return $html;
+			$embed_html = '<div class="embed-responsive ' . $atts['responsive_class'] . '">' . $embed_html . '</div>';
+//			error_log($embed_html);
+			return $embed_html;
 		} );
+	}
+
+	private function text_mix() {
+		add_shortcode( 'text_mix', function($atts){
+			global $jk_utilities;
+			$defaults = array(
+				'china' => '',
+				'other' => ''
+			);
+			$atts = shortcode_atts($defaults, $atts);
+
+			if (isset($_GET['youku']) || $jk_utilities->frontend->is_user_from_mainland_china() ) { // for testing youku service from outside mainland
+				$html = $atts['china'];
+			} else {
+				$html = $atts['other'];
+			}
+
+			return $html;
+		});
 	}
 
 	private function views_count(){
