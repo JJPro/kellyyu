@@ -77,7 +77,9 @@
         <item url="file://$PROJECT_DIR$/../../plugins/jetpack/modules/custom-css/custom-css/js/css-editor.min.js" />
         <item url="file://$PROJECT_DIR$/../../plugins/jetpack/modules/custom-css/custom-css/js/use-codemirror.min.js" />
         <item url="file://$PROJECT_DIR$/../../plugins/jetpack/modules/theme-tools/site-logo/js/site-logo.min.min.js" />
+        <item url="file://$PROJECT_DIR$/../../plugins/geoip-detect/vendor/guzzle/guzzle/tests/Guzzle/Tests/Http/server.min.js" />
         <item url="file://$PROJECT_DIR$/../../plugins/jetpack/modules/custom-css/custom-css/js/codemirror.min.min.js" />
+        <item url="file://$PROJECT_DIR$/../../plugins/geoip-detect/vendor/guzzle/guzzle/docs/_static/prettify.min.js" />
         <item url="file://$PROJECT_DIR$/../../plugins/jetpack/modules/theme-tools/site-logo/js/site-logo-control.min.min.js" />
         <item url="file://$PROJECT_DIR$/../../plugins/jetpack/modules/theme-tools/site-logo/js/site-logo-header-text.min.min.js" />
         <item url="file://$PROJECT_DIR$/../../plugins/jetpack/modules/minileven/theme/pub/minileven/js/small-menu.min.js" />
@@ -195,7 +197,9 @@
       <root url="file://$PROJECT_DIR$/../../plugins/jetpack/modules/custom-css/custom-css/js/css-editor.min.js" />
       <root url="file://$PROJECT_DIR$/../../plugins/jetpack/modules/custom-css/custom-css/js/use-codemirror.min.js" />
       <root url="file://$PROJECT_DIR$/../../plugins/jetpack/modules/theme-tools/site-logo/js/site-logo.min.min.js" />
+      <root url="file://$PROJECT_DIR$/../../plugins/geoip-detect/vendor/guzzle/guzzle/tests/Guzzle/Tests/Http/server.min.js" />
       <root url="file://$PROJECT_DIR$/../../plugins/jetpack/modules/custom-css/custom-css/js/codemirror.min.min.js" />
+      <root url="file://$PROJECT_DIR$/../../plugins/geoip-detect/vendor/guzzle/guzzle/docs/_static/prettify.min.js" />
       <root url="file://$PROJECT_DIR$/../../plugins/jetpack/modules/theme-tools/site-logo/js/site-logo-control.min.min.js" />
       <root url="file://$PROJECT_DIR$/../../plugins/jetpack/modules/theme-tools/site-logo/js/site-logo-header-text.min.min.js" />
       <root url="file://$PROJECT_DIR$/../../plugins/jetpack/modules/minileven/theme/pub/minileven/js/small-menu.min.js" />

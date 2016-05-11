@@ -78,12 +78,13 @@ class JKFrontendUtilities {
 			// post wechat img
 			$post = get_post();
 
-			$img_id = get_post_meta( $post, '_wechat_img', true); 
+			$img_id = get_post_meta( $post->ID, '_wechat_img', true);
 
 			$img_url = wp_get_attachment_image_src( $img_id, 'full' );
 			if ($img_url) {
 				$img_url = $img_url[0];
 			}
+
 		} elseif ( is_page() ) {
 			// use page thumbnail if exists
 			$img_url = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
@@ -114,13 +115,25 @@ class JKFrontendUtilities {
 		}
 
 		if ($img_url) {
+//			error_log('facebook_img: ' . $img_url);
 			return '<meta property="og:image" content="' . $img_url . '" />';
 		}
 	}
 
 	public function is_user_from_mainland_china() {
-		$origin = geolocator_country();
-		return $origin == '86';
+		static $result = null;
+
+		if ($result === null ) {
+
+			if ( isset($_GET['youku']) )
+				$result = true;
+			else{
+				$origin = geoip_detect2_get_info_from_current_ip(NULL);
+				$result = ($origin->country->isoCode == 'CN');
+			}
+		}
+
+		return $result;
 	}
 
 	// ** queried in the audio post format ** //

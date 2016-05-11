@@ -33,10 +33,11 @@ get_header(); ?>
 								endif;
 
 								$count = 0;
+								do_shortcode('[google_ads]');
 								/* Start the Loop */
 								while ( have_posts() ) : the_post();
 
-									if ($count == 2 || $count == 6){
+									if ($count == 4){
 										do_shortcode('[google_ads]');
 									}
 									$count++;
@@ -52,8 +53,8 @@ get_header(); ?>
 
 								// Previous/next page navigation.
 								the_posts_pagination( array(
-									'prev_text'          => __( 'Previous page', 'twentyfifteen' ),
-									'next_text'          => __( 'Next page', 'twentyfifteen' ),
+									'prev_text'          => '上一页',
+									'next_text'          => '下一页',
 									'before_page_number' => '<span class="meta-nav screen-reader-text">' . __( 'Page', 'twentyfifteen' ) . ' </span>',
 								) );
 

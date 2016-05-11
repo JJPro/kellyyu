@@ -6,29 +6,36 @@ if ( ! defined( 'ABSPATH' ) ) {
 class JKThemeSetup {
 
 	public static function init() {
+		global $jk_utilities;
 		self::theme_supports();
+		self::add_sidebars();
 		self::customize_title_tag(); // <title> in <head> element
 		self::register_nav_menus();
 		self::append_search_box_to_primary_menu();
 		self::wechat_img();
-		self::facebook_img(); // Facebook Sharing image
-		self::facebook_video_oembed_provider();
 		self::ios_icons();
-
-		self::add_sidebars(); 
-		self::facebook_integration_js();
 		self::widgets();
-
 
 		self::embeds();
 		self::shortcodes();
 		self::post_metas();
+		self::short_nav_text();
 
 		self::add_customize_controls(); // customize manager
 
+		if (! ($jk_utilities->frontend->is_user_from_mainland_china()) ) {
+			self::facebook_integration_js();
+			self::facebook_img(); // Facebook Sharing image
+			self::facebook_video_oembed_provider();
+			self::youtube_short_url_oembed_provider();
 
+		}
 		self::google_analytics();
 		self::google_page_level_ads();
+
+
+
+
 	}
 
 	private static function theme_supports() {
@@ -205,5 +212,36 @@ class JKThemeSetup {
 				wp_oembed_add_provider( $pattern, $endpoint, true );
 			}
 		});
+	}
+
+	private static function youtube_short_url_oembed_provider(){
+		add_action('init', function(){
+			$endpoint = 'https://www.youtube.com/oembed/';
+
+			wp_oembed_add_provider( '/https?://youtu.be/.*/i', $endpoint, true );
+		});
+	}
+
+	private static function short_nav_text() {
+		add_filter('previous_post_link', 'short_title', 10, 3);
+
+		add_filter('next_post_link', 'short_title', 10, 3);
+
+		function short_title($output, $format, $link){
+			$len = 35;
+
+			preg_match('/(?:<a[^>]+>)(.*)(?=<\/a>)/i', $output, $matches);
+
+			if ($matches) {
+				$title = $matches[1];
+
+				$short = ( strlen($title) > $len ) ? substr($title, 0, $len) . ' ...' : $title;
+				$short = '<span data-toggle="tooltip" title="' . $title . '">' . $short . '</span>';
+
+				$output = preg_replace('/(<a[^>]+>)(.*)(?=<\/a>)/i', '$1' . $short, $output);
+			}
+
+			return $output;
+		}
 	}
 }

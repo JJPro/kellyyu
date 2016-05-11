@@ -22,6 +22,8 @@ a {
 .scroll {overflow: scroll;}
 .screen-reader-text {width:0; height:0; position: absolute !important; overflow: hidden;}
 .embed-responsive-ipad-portrait {padding-bottom: 133.3%;}
+.embed-responsive-9by16 {padding-bottom: 177.78%;}
+.embed-container {width:100%; position: relative; left: 50%; transform: translateX(-50%);}
 
 body {-webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;}
 .background-image { background-position: center center; background-size: cover; background-repeat: no-repeat; }
@@ -98,7 +100,7 @@ header { position: relative; background-repeat: no-repeat; background-position: 
 /*
     Read More ... Link style
 */
-a.more-link {padding: 3px 15px; background-color: lighten(red, 15%); color: #FFF; display: block; float: right; border-radius: 2px; }
+a.more-link {padding: 3px 15px; background-color: lighten(red, 15%); color: #FFF; display: block; border-radius: 2px; position:relative; left:50%; transform:translateX(-50%); width:120px; margin-top:13px;}
 
 /*
     entry meta
@@ -262,10 +264,14 @@ article.post.format-video {
 // ** Single ** //
 nav.post-navigation{ margin-top: 20px; font-size: medium;
   .screen-reader-text {display: none;}
-  .nav-links {
-    .nav-previous, .nav-next {display: inline-block;}
-    .nav-previous {float: left;}
-    .nav-next {float: right;}
+  .nav-links { position: relative; height: 3em;
+    .nav-previous, .nav-next {display: inline-block; position: absolute;}
+    .nav-previous {left: 0;
+      &::before {content: '<< 上一篇'; display: block;}
+    }
+    .nav-next {right: 0;
+      &::before {content: '下一篇 >>'; display: block;}
+    }
   }
 }
 
@@ -296,3 +302,11 @@ nav.pagination {width: 100%;
 // ** Google Ads ** //
 ins.adsbygoogle {margin: 10px auto;}
 
+// ** Facebook Comment Plugin ** //
+div[id^=wpdevar_comment] {
+  &>span{  display: block; background-color: #262626; color: #FFF !important; position: relative; padding: 0 10px 5px 20px !important; margin-bottom: 10px; margin-left: -20px;
+    .icon-comment-discussion {position: relative; top: 4px;}
+
+    &::after {content: ''; position: absolute; left: 0; bottom: -20px; border-width: 20px 0 0 20px; border-style: solid; border-color: #A9A9A9 transparent;}
+  }
+}

@@ -6,13 +6,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 class JKShortcodes {
 
 	public function __construct() {
-		$this->youku_youtube_mix();
+		$this->video_mix();
 		$this->text_mix();
 		$this->views_count();
 		$this->google_ads();
 	}
 
-	private function youku_youtube_mix(){ 
+	private function video_mix(){ 
 		add_shortcode( 'video_mix', function( $atts ) {
 			$video = '';
 			global $jk_utilities;
@@ -21,10 +21,11 @@ class JKShortcodes {
 				'youku' => '',
 				'facebook' => '',
 				'responsive_class' => 'embed-responsive-16by9',
+				'container_max_width' => '',
 			);
 			$atts = shortcode_atts($defaults, $atts);
 
-			if (isset($_GET['youku']) || $jk_utilities->frontend->is_user_from_mainland_china() ) { // for testing youku service from outside mainland
+			if ( $jk_utilities->frontend->is_user_from_mainland_china() ) {
 				$video = $atts['youku'];
 
 				$matches = array();
@@ -44,6 +45,10 @@ class JKShortcodes {
 			}
 
 			$embed_html = '<div class="embed-responsive ' . $atts['responsive_class'] . '">' . $embed_html . '</div>';
+
+			if ( $atts['container_max_width'] ){
+				$embed_html = '<div class="embed-container" style="max-width: ' . $atts['container_max_width'] . 'px;">' . $embed_html . '</div>';
+			}
 //			error_log($embed_html);
 			return $embed_html;
 		} );

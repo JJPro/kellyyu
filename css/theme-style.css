@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*
       Variables
       -------------------------
@@ -48,6 +49,15 @@ a, a:hover, a:visited, a:focus {
 
 .embed-responsive-ipad-portrait {
   padding-bottom: 133.3%; }
+
+.embed-responsive-9by16 {
+  padding-bottom: 177.78%; }
+
+.embed-container {
+  width: 100%;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%); }
 
 body {
   -webkit-font-smoothing: antialiased;
@@ -233,8 +243,12 @@ a.more-link {
   background-color: #ff4d4d;
   color: #FFF;
   display: block;
-  float: right;
-  border-radius: 2px; }
+  border-radius: 2px;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  margin-top: 13px; }
 
 /*
     entry meta
@@ -495,12 +509,22 @@ nav.post-navigation {
   font-size: medium; }
   nav.post-navigation .screen-reader-text {
     display: none; }
-  nav.post-navigation .nav-links .nav-previous, nav.post-navigation .nav-links .nav-next {
-    display: inline-block; }
-  nav.post-navigation .nav-links .nav-previous {
-    float: left; }
-  nav.post-navigation .nav-links .nav-next {
-    float: right; }
+  nav.post-navigation .nav-links {
+    position: relative;
+    height: 3em; }
+    nav.post-navigation .nav-links .nav-previous, nav.post-navigation .nav-links .nav-next {
+      display: inline-block;
+      position: absolute; }
+    nav.post-navigation .nav-links .nav-previous {
+      left: 0; }
+      nav.post-navigation .nav-links .nav-previous::before {
+        content: '<< 上一篇';
+        display: block; }
+    nav.post-navigation .nav-links .nav-next {
+      right: 0; }
+      nav.post-navigation .nav-links .nav-next::before {
+        content: '下一篇 >>';
+        display: block; }
 
 nav.pagination {
   width: 100%; }
@@ -556,5 +580,25 @@ nav.pagination {
 
 ins.adsbygoogle {
   margin: 10px auto; }
+
+div[id^=wpdevar_comment] > span {
+  display: block;
+  background-color: #262626;
+  color: #FFF !important;
+  position: relative;
+  padding: 0 10px 5px 20px !important;
+  margin-bottom: 10px;
+  margin-left: -20px; }
+  div[id^=wpdevar_comment] > span .icon-comment-discussion {
+    position: relative;
+    top: 4px; }
+  div[id^=wpdevar_comment] > span::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -20px;
+    border-width: 20px 0 0 20px;
+    border-style: solid;
+    border-color: #A9A9A9 transparent; }
 
 /*# sourceMappingURL=theme-style.css.map */

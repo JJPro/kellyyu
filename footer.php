@@ -23,9 +23,9 @@
 		    </div>
 	    </div>
 		<div class="site-info">
-			<?php printf( esc_html__( 'Proudly powered by %s', 'kellyyu_1-0' ), 'WordPress' ); ?>
+			<?php printf( 'Proudly powered by %s', 'WordPress' ); ?>
 			<br>
-			<?php printf( esc_html__( 'Theme by %s.', 'kellyyu_1-0' ), '<a href="http://jjpro.net/" rel="designer">JJPro.net</a>' ); ?>
+			<?php printf( 'Theme by %s.', '<a href="http://jjpro.net/" rel="designer">JJPro.net</a>' ); ?>
 		</div><!-- .site-info -->
 	</footer><!-- #colophon -->
 </div><!-- #page -->
