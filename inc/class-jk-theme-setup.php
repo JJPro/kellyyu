@@ -18,18 +18,22 @@ class JKThemeSetup {
 
 		self::embeds();
 		self::shortcodes();
-		self::post_metas();
+		self::post_metas(); // meta-boxes
 		self::short_nav_text();
 
 		self::add_customize_controls(); // customize manager
 
 		if (! ($jk_utilities->frontend->is_user_from_mainland_china()) ) {
 			self::facebook_integration_js();
-			self::facebook_img(); // Facebook Sharing image
+			self::facebook_share_support(); // Facebook Sharing
 			self::facebook_video_oembed_provider();
 			self::youtube_short_url_oembed_provider();
 
 		}
+
+		self::weibo_integration();
+
+
 		self::google_analytics();
 		self::google_page_level_ads();
 
@@ -123,23 +127,34 @@ class JKThemeSetup {
 	private static function facebook_integration_js() {
 		add_action('jk_body_start', function(){
 			?>
-				<div id="fb-root"></div>
-				<script>(function(d, s, id) {
-				  var js, fjs = d.getElementsByTagName(s)[0];
-				  if (d.getElementById(id)) return;
-				  js = d.createElement(s); js.id = id;
-				  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=391602454372029";
-				  fjs.parentNode.insertBefore(js, fjs);
+			<script>
+				window.fbAsyncInit = function() {
+					FB.init({
+						appId      : '879068418870248',
+						xfbml      : true,
+						version    : 'v2.6'
+					});
+				};
+
+				(function(d, s, id){
+					var js, fjs = d.getElementsByTagName(s)[0];
+					if (d.getElementById(id)) {return;}
+					js = d.createElement(s); js.id = id;
+					js.src = "//connect.facebook.net/en_US/sdk.js";
+					fjs.parentNode.insertBefore(js, fjs);
 				}(document, 'script', 'facebook-jssdk'));
-				</script>
+			</script>
 			<?php 
 		});
 	}
 
 	private static function widgets() {
 		require_once('class-jk-social-widget.php');
+		require_once('class-jk-like-button-widget.php');
 		add_action('widgets_init', function(){
 			register_widget('JKSocialWidget');
+			register_widget('JKLikeButtonWidget');
+
 		});
 	}
 
@@ -150,10 +165,19 @@ class JKThemeSetup {
 		});
 	}
 
-	private static function facebook_img(){
+	private static function facebook_share_support(){
 		add_action('wp_head', function(){
 			global $jk_utilities;
+
+			// App ID
+			echo $jk_utilities->frontend->facebook_app_id_meta();
+
+			// Image
 			echo $jk_utilities->frontend->facebook_image_html();
+
+			// Other: URL, title, description, app_id
+			// this is done by Jetpack for you
+//			echo $jk_utilities->frontend->facebook_share_meta();
 		});
 	}
 
@@ -223,25 +247,47 @@ class JKThemeSetup {
 	}
 
 	private static function short_nav_text() {
-		add_filter('previous_post_link', 'short_title', 10, 3);
+		add_filter('previous_post_link', 'add_title_tooltip', 10, 3);
 
-		add_filter('next_post_link', 'short_title', 10, 3);
+		add_filter('next_post_link', 'add_title_tooltip', 10, 3);
 
-		function short_title($output, $format, $link){
-			$len = 35;
+		// Ellipsis is controlled by CSS, which is awesome
+		add_action('wp_footer', function(){
+			?>
+			<style>
+				.nav-links .nav-previous span,
+				.nav-links .nav-next span {
+					width: 180px;
+					white-space: nowrap;
+					overflow: hidden;
+					text-overflow: ellipsis;
+				}
+			</style>
+			<?php
+		});
+
+		function add_title_tooltip($output, $format, $link){
 
 			preg_match('/(?:<a[^>]+>)(.*)(?=<\/a>)/i', $output, $matches);
 
 			if ($matches) {
 				$title = $matches[1];
 
-				$short = ( strlen($title) > $len ) ? substr($title, 0, $len) . ' ...' : $title;
-				$short = '<span data-toggle="tooltip" title="' . $title . '">' . $short . '</span>';
+				$title_with_tooltip = '<span data-toggle="tooltip" title="' . $title . '">' . $title . '</span>';
 
-				$output = preg_replace('/(<a[^>]+>)(.*)(?=<\/a>)/i', '$1' . $short, $output);
+				$output = preg_replace('/(<a[^>]+>)(.*)(?=<\/a>)/i', '$1' . $title_with_tooltip, $output);
 			}
 
 			return $output;
 		}
+	}
+
+	private static function weibo_integration(){
+		add_action( 'wp_head', function(){
+			?>
+			<html xmlns:wb=“http://open.weibo.com/wb”>
+			<script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
+			<?php
+		});
 	}
 }

@@ -74,7 +74,7 @@ class JKFrontendUtilities {
 			// site icon
 			$img_url = get_site_icon_url();
 
-		} elseif ( is_single() ) {
+		} elseif ( is_single() || is_page() ) {
 			// post wechat img
 			$post = get_post();
 
@@ -85,12 +85,6 @@ class JKFrontendUtilities {
 				$img_url = $img_url[0];
 			}
 
-		} elseif ( is_page() ) {
-			// use page thumbnail if exists
-			$img_url = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
-			if ($img_url) {
-				$img_url = $img_url[0];
-			}
 		}
 
 
@@ -99,6 +93,10 @@ class JKFrontendUtilities {
 				</div>';
 
 		return $html;
+	}
+
+	public function facebook_app_id_meta(){
+		return '<meta property="fb:app_id" content="879068418870248" />';
 	}
 
 	public function facebook_image_html(){
@@ -116,9 +114,59 @@ class JKFrontendUtilities {
 
 		if ($img_url) {
 //			error_log('facebook_img: ' . $img_url);
-			return '<meta property="og:image" content="' . $img_url . '" />';
+			return '<link rel="image_src" href="' . $img_url . '" />';
 		}
 	}
+
+	public function facebook_share_meta(){
+
+		// URL
+		$url = home_url( $_SERVER['REQUEST_URI'] );
+
+		// Title
+		if ( is_home() || is_front_page() ) {
+			$title = get_bloginfo('name');
+		} elseif ( is_archive() ) {
+			$title = get_bloginfo('name') . ' &raquo; ' . get_the_archive_title();
+		} elseif ( is_single() ) {
+			$title = get_bloginfo('name') . ' &raquo; ' . get_the_title();
+		}
+
+		// Description
+		if ( is_home() || is_front_page() ) {
+			$description = get_bloginfo('description');
+		} elseif ( is_archive() ) {
+			$description = get_the_archive_description();
+		} elseif ( is_single() ) {
+			$description = get_the_excerpt();
+		}
+
+		?>
+		<meta property="og:url" content="<?php echo $url; ?>" />
+		<meta property="og:title" content="<?php echo $title; ?>" />
+		<meta property="og:description" content="<?php echo $description; ?>" />
+		<?php
+	}
+
+	// ** unused ** //
+	public function featured_image_html(){
+		if ( is_home() || is_front_page() ){
+			// site icon
+			$img_url = get_site_icon_url();
+
+		} else {
+			// use page thumbnail if exists
+			$img_url = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
+			if ($img_url) {
+				$img_url = $img_url[0];
+			}
+		}
+
+		if ($img_url) {
+			return '<div class="featured-image" style="position: absolute; left: -10000px;"><img src="' . $img_url . '"/></div>';
+		}
+	}
+
 
 	public function is_user_from_mainland_china() {
 		static $result = null;

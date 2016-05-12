@@ -23,9 +23,9 @@
 		    </div>
 	    </div>
 		<div class="site-info">
-			<?php printf( 'Proudly powered by %s', 'WordPress' ); ?>
+			Some Rights Reserved.
 			<br>
-			<?php printf( 'Theme by %s.', '<a href="http://jjpro.net/" rel="designer">JJPro.net</a>' ); ?>
+			<?php echo date('Y') . ' Every Kelly于文文 Video'; ?>
 		</div><!-- .site-info -->
 	</footer><!-- #colophon -->
 </div><!-- #page -->

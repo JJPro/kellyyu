@@ -9,13 +9,13 @@ class JKMetaBoxes {
 		require_once( 'metabox/class-jk-metabox-external-audio-track.php' );
         require_once( 'metabox/class-jk-metabox-wechat-image.php');
 
-
 		add_action('add_meta_boxes', array( $this, 'add_meta_boxes' ), 10);
 		add_action('save_post', array($this, 'save_meta_boxes'), 1, 2);
 
 		// save ximalaya track info
 		add_action('jk_process_post_meta', 'JKMetaBoxExternalAudioTrack::save', 10, 2);
         add_action('jk_process_post_meta', 'JKMetaBoxWechatImage::save', 10, 2);
+        add_action('jk_process_page_meta', 'JKMetaBoxWechatImage::save', 10, 2);
 	}
 
 	public function add_meta_boxes() {
@@ -31,6 +31,11 @@ class JKMetaBoxes {
             JKMetaBoxWechatImage::script();
             add_meta_box( JKMetaBoxWechatImage::$id, '微信分享的小图片', 'JKMetaBoxWechatImage::output', 'post', 'normal', 'high');
 		}
+
+        if ($screen->post_type == 'page') {
+            JKMetaBoxWechatImage::script();
+            add_meta_box( JKMetaBoxWechatImage::$id, '微信分享的小图片', 'JKMetaBoxWechatImage::output', 'page', 'normal', 'high');
+        }
 	}
 
 	public function save_meta_boxes( $post_id, $post ) {

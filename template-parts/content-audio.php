@@ -20,7 +20,7 @@ global $jk_utilities;
 		<?php if ($jk_utilities->frontend->has_external_audio()): ?>
 			<?php echo $jk_utilities->frontend->get_external_audio_html(); ?>
 		<?php endif; ?>
-		<?php the_content( '阅读整篇文章' ); ?>
+		<?php the_content( '阅读全部' ); ?>
 		
 	</div><!-- .entry-content -->
 	
