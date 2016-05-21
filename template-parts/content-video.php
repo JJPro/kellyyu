@@ -24,7 +24,7 @@ global $jk_utilities;
 	
 	<div class="entry-content">
 		
-		<?php the_content( '阅读全部' ); ?>
+		<?php the_content( '继续阅读' ); ?>
 		
 	</div><!-- .entry-content -->
 	

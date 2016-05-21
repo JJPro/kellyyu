@@ -12,7 +12,7 @@ class JKLikeButtonWidget extends WP_Widget {
 		);
 		parent::__construct( 'jk-like-button-widget', 'Like on Facebook and Weibo', $widget_ops );
 
-//		$this->style();
+		$this->style();
 	}
 
 	/**
@@ -24,7 +24,7 @@ class JKLikeButtonWidget extends WP_Widget {
 	public function widget( $args, $instance ) {
 		global $jk_utilities;
 
-		$title = $instance['title'];
+		$title = isset($instance['title'])?$instance['title']:'';
 		$facebook_code = $instance['facebook-like-code'];
 		$weibo_like_code = $instance['weibo-like-code'];
 		$weibo_share_code = $instance['weibo-share-code'];
@@ -102,7 +102,13 @@ class JKLikeButtonWidget extends WP_Widget {
 
 		add_action('wp_footer', function() {
 			// ** style of the widget ** //
-
+			?>
+			<style>
+				.widget-area .fb-like.fb_iframe_widget {
+					margin-bottom: 10px;
+				}
+			</style>
+			<?php
 		});
 	}
 

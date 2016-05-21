@@ -601,4 +601,7 @@ div[id^=wpdevar_comment] > span {
     border-style: solid;
     border-color: #A9A9A9 transparent; }
 
+.post.format-standard .post-thumbnail {
+  height: 300px; }
+
 /*# sourceMappingURL=theme-style.css.map */

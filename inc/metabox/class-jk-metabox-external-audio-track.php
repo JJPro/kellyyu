@@ -178,7 +178,7 @@ class JKMetaBoxExternalAudioTrack {
 			
 			<p>
 				<input type="checkbox" id="external-track-enabled" name="have_external_track" value="1" <?php checked($enabled, true); ?> />
-				<label for="external-track-enabled">外部声音链接</label>
+				<label for="external-track-enabled">站外音频链接</label>
 			</p>
 			<div id="data-panel" style="margin-left: 25px; display: <?php echo $enabled ? 'block' : 'none'; ?>;">
 				<label for="provider">音频来源: </label>
@@ -186,7 +186,7 @@ class JKMetaBoxExternalAudioTrack {
 					<option value="0" <?php selected($provider, '0'); ?>>请选择...</option>
 					<option value="ximalaya" <?php selected($provider, 'ximalaya'); ?>>喜马拉雅FM</option>
 					<option value="changba" <?php selected($provider, 'changba'); ?>>唱吧</option>
-					<option value="qingting" <?php selected($provider, 'qingting'); ?>>蜻蜓FM或其他</option>
+					<option value="qingting" <?php selected($provider, 'qingting'); ?>>其他...</option>
 				</select>
 				
 				<p id="data-url">
@@ -194,11 +194,11 @@ class JKMetaBoxExternalAudioTrack {
 					<input type="text" id="external-track-url" name="external_track_url" value="<?php echo $track_url; ?>" />
 				</p>
 				<p id="data-title">
-					<label for="external-track-title">Title：</label>
+					<label for="external-track-title">音频名称：</label>
 					<input type="text" id="external-track-title" name="external_track_title" value="<?php echo $track_title; ?>" />
 				</p>
 				<p id="data-mp3">
-					<label for="external-track-mp3">mp3聲音地址：</label>
+					<label for="external-track-mp3">音频mp3地址：</label>
 					<input type="text" id="external-track-mp3" name="external_track_mp3" value="<?php echo $track_mp3; ?>" />
 				</p>
 				<p id="data-cover">
@@ -209,13 +209,13 @@ class JKMetaBoxExternalAudioTrack {
 						$img_src = wp_get_attachment_image_src( $img_id ); 
 						$img_src = $img_src ? $img_src[0] : '';
 					?>
-					<label>Cover：</label>
+					<label>专辑封面：</label>
 					<a class="upload-external-track-cover button <?php if ( $img_src  ) { echo 'hidden'; } ?>" href="<?php echo $upload_link ?>">
-				        <?php _e('Set cover image') ?>
+				        <?php _e('设置专辑封面') ?>
 				    </a>
 				    <a class="delete-external-track-cover button <?php if ( ! $img_src  ) { echo 'hidden'; } ?>" 
 				      href="#">
-				        <?php _e('Remove this image') ?>
+				        <?php _e('删除专辑封面') ?>
 				    </a>
 
 				    <!-- A hidden input to set and post the chosen image id -->

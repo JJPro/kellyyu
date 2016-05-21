@@ -125,14 +125,14 @@ class JKMetaBoxWechatImage {
 		<!-- add & remove image links -->
 		<p class="hide-if-no-js">
 
-			image must be at least 500px wide.
+			图片的高和宽至少要大于500px.
 			<br>
 		    <a class="upload-wechat-img button <?php if ( $img_src  ) { echo 'hidden'; } ?>" href="<?php echo $upload_link ?>">
-		        <?php _e('Set wechat image') ?>
+		        <?php _e('设置微信图片') ?>
 		    </a>
 		    <a class="delete-wechat-img button <?php if ( ! $img_src  ) { echo 'hidden'; } ?>" 
 		      href="#">
-		        <?php _e('Remove this image') ?>
+		        <?php _e('删除微信图片') ?>
 		    </a>
 		</p>
 

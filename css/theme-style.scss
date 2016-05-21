@@ -310,3 +310,8 @@ div[id^=wpdevar_comment] {
     &::after {content: ''; position: absolute; left: 0; bottom: -20px; border-width: 20px 0 0 20px; border-style: solid; border-color: #A9A9A9 transparent;}
   }
 }
+
+
+// ** Post Thumbnail ** //
+.post.format-standard .post-thumbnail { height: 300px;
+}

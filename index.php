@@ -37,7 +37,7 @@ get_header(); ?>
 								/* Start the Loop */
 								while ( have_posts() ) : the_post();
 
-									if ($count == 4){
+									if ($count == 2){
 										do_shortcode('[google_ads]');
 									}
 									$count++;

@@ -18,9 +18,9 @@ get_header(); ?>
 				<?php
 				while ( have_posts() ) : the_post();
 
-					if ($jk_utilities->frontend->is_user_from_mainland_china()) {
-						echo '<div class="warning text-center"><strong>注意：</strong>本页照片引自Kelly的Instagram，大陆使用者可能无法正常显示，很抱歉。</div>';
-					}
+//					if ($jk_utilities->frontend->is_user_from_mainland_china()) {
+//						echo '<div class="warning text-center"><strong>注意：</strong>本页照片引自Kelly的Instagram，大陆使用者可能无法正常显示，很抱歉。</div>';
+//					}
 					get_template_part( 'template-parts/content', 'page' );
 
 					// If comments are open or we have at least one comment, load up the comment template.

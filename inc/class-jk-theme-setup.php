@@ -36,10 +36,14 @@ class JKThemeSetup {
 
 		self::google_analytics();
 		self::google_page_level_ads();
+		self::google_foot_banner_ads(); // Fixed positioned ads at the bottom Only show on small screens
 
 
+		self::rss();
 
-
+		// ** corner cases ** //
+		// swap instagram js for chinese users
+		self::swap_instagram_js();
 	}
 
 	private static function theme_supports() {
@@ -55,8 +59,15 @@ class JKThemeSetup {
 			add_theme_support('html5', array( 'search-form', 'comment-form', 'comment-list', 'gallery', 'caption') );
 			add_theme_support('custom-header', $header_img_defaults); 
 			add_theme_support('title-tag');
-			add_theme_support('post-formats', array('aside', 'gallery', 'image', 'status', 'video', 'audio'));
+			add_theme_support('post-formats', array( /* 'aside', 'gallery', 'image', */ 'status', 'video', 'audio'));
 			add_theme_support('post-thumbnails');
+			/*
+			add_theme_support('infinite-scroll', array(
+				'container' => 'main',
+				'footer' => 'colophon',
+				'type' => 'click'
+			));
+			*/
 		});
 	}
 
@@ -225,6 +236,58 @@ class JKThemeSetup {
 		});
 	}
 
+	private static function google_foot_banner_ads(){
+		// Only show on small screens
+		add_action( 'wp_footer', function(){
+			?>
+			<div class="google-foot-banner-ads">
+				<?php echo google_foot_banner_ads_code(); ?>
+			</div>
+
+			<?php echo google_foot_banner_ads_style(); ?>
+			<?php
+		});
+
+		function google_foot_banner_ads_code(){
+			return '<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- mobile foot banner -->
+					<ins class="adsbygoogle"
+						 style="display:inline-block;width:320px;height:50px"
+						 data-ad-client="ca-pub-0919081176944377"
+						 data-ad-slot="1080114878"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>';
+		}
+
+		function google_foot_banner_ads_style() {
+			return '<style>
+						.google-foot-banner-ads {
+							text-align: center;
+							position: fixed;
+							bottom: 0;
+							width:100%;
+							height:50px;
+							display: none;
+							z-index: 99;
+							/* background: rgba(255, 255, 255, 0.8); */
+							/* border-top: solid 1px rgba(0, 0, 0, 0.15); */
+						}
+
+						.google-foot-banner-ads ins.adsbygoogle {margin: 0 auto !important;}
+
+						@media screen and (max-width: 991px) {
+						  .google-foot-banner-ads {
+						  	display: block;
+						  }
+						  footer {
+						  	padding-bottom: 50px;
+						  }
+						}
+					</style>';
+		}
+	}
+
 	private static function facebook_video_oembed_provider(){
 		add_action('init', function(){
 			$endpoints = array(
@@ -255,9 +318,15 @@ class JKThemeSetup {
 		add_action('wp_footer', function(){
 			?>
 			<style>
+				.nav-links .nav-previous,
+				.nav-links .nav-next {
+					max-width: 48%;
+				}
+
 				.nav-links .nav-previous span,
 				.nav-links .nav-next span {
-					width: 180px;
+					display: inline-block;
+					max-width: 100%;
 					white-space: nowrap;
 					overflow: hidden;
 					text-overflow: ellipsis;
@@ -289,5 +358,38 @@ class JKThemeSetup {
 			<script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
 			<?php
 		});
+	}
+
+	private static function rss() {
+		add_filter('the_content_feed', function($content){
+			return apply_filters('the_content', $content);
+		});
+	}
+
+	private static function swap_instagram_js(){
+
+		add_action( 'wp_enqueue_scripts', function(){
+
+			include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+			global $jk_utilities;
+
+			// check existence of plugin && user from mainland china
+			if ( is_plugin_active('instagram-feed-pro/instagram-feed.php') ){
+//			if (is_plugin_active('instagram-feed/instagram-feed.php')){
+//				error_log('instagram-feed is active');
+
+				if ($jk_utilities->frontend->is_user_from_mainland_china()){
+
+//					error_log('this is mainland china, localizing script ...');
+					$proxy_script_url = get_template_directory_uri() . '/inc/instagram-proxy/instagram-proxy.php';
+					// localize with 'request' proxy processing url
+					wp_localize_script('sb_instagram_scripts', 'jk_proxy_vars', array('proxy_script_url' => $proxy_script_url));
+
+				}
+			}
+
+		});
+
+
 	}
 }

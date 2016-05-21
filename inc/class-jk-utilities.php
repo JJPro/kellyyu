@@ -314,6 +314,17 @@ class JKFrontendUtilities {
 
 	}
 
+	public function jk_post_thumbnail() {
+		if ( post_password_required() || is_attachment() || ! has_post_thumbnail() ) {
+			return;
+		} ?>
+
+
+		<div class="post-thumbnail background-image" style="background-image: url(<?php the_post_thumbnail_url(); ?>)">
+		</div><!-- .post-thumbnail -->
+		<?php
+	}
+
 }
 
 

@@ -26,7 +26,7 @@ class JKMetaBoxes {
 		if ($screen->post_type == 'post') {
 
             JKMetaBoxExternalAudioTrack::init();
-			add_meta_box(JKMetaBoxExternalAudioTrack::$id, '喜馬拉雅或唱吧聲音鏈接', 'JKMetaBoxExternalAudioTrack::output', 'post', 'normal', 'high');
+			add_meta_box(JKMetaBoxExternalAudioTrack::$id, '音频', 'JKMetaBoxExternalAudioTrack::output', 'post', 'normal', 'high');
 
             JKMetaBoxWechatImage::script();
             add_meta_box( JKMetaBoxWechatImage::$id, '微信分享的小图片', 'JKMetaBoxWechatImage::output', 'post', 'normal', 'high');
