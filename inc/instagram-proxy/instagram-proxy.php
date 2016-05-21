@@ -4,27 +4,36 @@ include_once('database.php');
 ini_set("log_errors", 1);
 ini_set("error_log", explode( "wp-content", __FILE__ )[0] . 'wp-content/debug.log');
 
-
 // ** filter out the requested link ** //
 $cache_table = 'jk_instagram_cache';
 $local_store = explode( "wp-content", __FILE__ )[0] . 'wp-content/uploads/instagram-cache/';
 $site_url = preg_replace('/wp-content.+/', '', $_SERVER['REQUEST_URI']);
 
+
 preg_match('/(?<=\?request=).+/', $_SERVER['REQUEST_URI'], $matches);
 $request = preg_replace('/%site%/', 'https://api.instagram.com', $matches[0]);
+
+// getting callback function
+$callback = false;
+
+if (isset($_GET['callback'])){
+    $callback = $_GET['callback'];
+}
+
 // ** END OF getting requested link ** //
 
-//error_log('request: ' . $request);
 
 // get request type: media or else
 $is_media_request = preg_match('/\/media\//', $request);
 
 // ** strip callback function wrap so that we can decode it into PHP object ** //
-if ( $is_media_request && isset($_GET['callback'])){
-    $request = rtrim($request, '&callback=' . $_GET['callback']);
+if ($callback){
+    $request = preg_replace('/&callback=.+$/', '', $request);
 }
 
 $response = file_get_contents($request);
+
+//error_log('request: ' . $request);
 //error_log('response: ' . $response);
 
 $response_obj = json_decode($response);
@@ -35,9 +44,9 @@ $response_obj = json_decode($response);
 // replace media links with cache
 if ( $is_media_request ) {
 
-//    error_log('fetching media ...');
+    error_log('fetching media ...');
 
-    //$response_obj->data // array of images
+    //$response_obj->data is array of images
 
     foreach ($response_obj->data as &$ig_object){
 
@@ -57,6 +66,7 @@ if ( $is_media_request ) {
             $ig_object->videos->standard_resolution->url = $media_urls['video_standard_resolution'];
             $ig_object->videos->low_bandwidth->url = $media_urls['video_low_bandwidth'];
         }
+
     }
 
 } else {
@@ -66,17 +76,18 @@ if ( $is_media_request ) {
 
 
 // ** restore the callback function to the next_url field ** //
-if ( isset($response_obj->pagination->next_url) && isset($_GET['callback']))
-    $response_obj->pagination->next_url .= '&callback=' . $_GET['callback'];
+if ( isset($response_obj->pagination->next_url) && $callback )
+    $response_obj->pagination->next_url .= '&callback=' . $callback;
 
 $response = json_encode($response_obj);
 
-if (isset($_GET['callback'])) {
+
+if ($callback) {
     header('Content-Type: text/javascript; charset=utf-8');
 //    header('Access-Control-Allow-Origin: http://www.example.com/');
 //    header('Access-Control-Max-Age: 3628800');
 //    header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
-    echo $_GET['callback'] . '(' . $response . ')';
+    echo $callback . '(' . $response . ')';
 } else {
     // normal JSON string
     header('Content-Type: application/json; charset=utf-8');
@@ -158,11 +169,15 @@ function _cache_media($ig_object) {
         $fname = $fbase . $fext;
         $fpath = $local_store . $fname;
 
-        if ( file_put_contents($fpath, file_get_contents($ig_object->images->$resolution->url)) ){
-            // save succeeded
-            ${'image_' . $resolution . '_fpath'} = $fpath;
-        } else { // save failed
+        if ( ! file_exists($fpath) ) {
+            if ( file_put_contents($fpath, file_get_contents($ig_object->images->$resolution->url)) ){
+                // save succeeded
+                ${'image_' . $resolution . '_fpath'} = $fpath;
+            } else { // save failed
 
+            }
+        } else {
+            // skip when file already exists
         }
     }
 
@@ -178,22 +193,26 @@ function _cache_media($ig_object) {
 //            error_log('url: ' . $ig_object->videos->$resolution->url);
 //            error_log('file_path: ' . $fpath);
 
-            if ( file_put_contents($fpath, file_get_contents($ig_object->videos->$resolution->url)) ){
-                // save succeeded
-                ${'video_' . $resolution . '_fpath'} = $fpath;
-            } else { // save failed
+            if ( ! file_exists($fpath) ){
+                if ( file_put_contents($fpath, file_get_contents($ig_object->videos->$resolution->url)) ){
+                    // save succeeded
+                    ${'video_' . $resolution . '_fpath'} = $fpath;
+                } else { // save failed
 
+                }
+            } else {
+                // skip when file already exists
             }
         }
     }
 
     // get url from fpath(s)
-    $image_low_resolution_url = $image_low_resolution_fpath ? preg_replace('/.+(?=\/wp-content)/', $site_url, $image_low_resolution_fpath) : '';
-    $image_thumbnail_url = $image_thumbnail_fpath ? preg_replace('/.+(?=\/wp-content)/', $site_url, $image_thumbnail_fpath) : '';
-    $image_standard_resolution_url = $image_standard_resolution_fpath ? preg_replace('/.+(?=\/wp-content)/', $site_url, $image_standard_resolution_fpath) : '';
-    $video_low_resolution_url = $video_low_resolution_fpath ? preg_replace('/.+(?=\/wp-content)/', $site_url, $video_low_resolution_fpath) : '';
-    $video_standard_resolution_url = $video_standard_resolution_fpath ? preg_replace('/.+(?=\/wp-content)/', $site_url, $video_standard_resolution_fpath) : '';
-    $video_low_bandwidth_url = $video_low_bandwidth_fpath ? preg_replace('/.+(?=\/wp-content)/', $site_url, $video_low_bandwidth_fpath) : '';
+    $image_low_resolution_url = $image_low_resolution_fpath ? preg_replace('/.+(?=wp-content)/', $site_url, $image_low_resolution_fpath) : '';
+    $image_thumbnail_url = $image_thumbnail_fpath ? preg_replace('/.+(?=wp-content)/', $site_url, $image_thumbnail_fpath) : '';
+    $image_standard_resolution_url = $image_standard_resolution_fpath ? preg_replace('/.+(?=wp-content)/', $site_url, $image_standard_resolution_fpath) : '';
+    $video_low_resolution_url = $video_low_resolution_fpath ? preg_replace('/.+(?=wp-content)/', $site_url, $video_low_resolution_fpath) : '';
+    $video_standard_resolution_url = $video_standard_resolution_fpath ? preg_replace('/.+(?=wp-content)/', $site_url, $video_standard_resolution_fpath) : '';
+    $video_low_bandwidth_url = $video_low_bandwidth_fpath ? preg_replace('/.+(?=wp-content)/', $site_url, $video_low_bandwidth_fpath) : '';
 
     // record in database
     $query = "INSERT INTO {$cache_table} (link, image_low_resolution, image_thumbnail, image_standard_resolution, video_low_resolution, video_standard_resolution, video_low_bandwidth) VALUES ('{$ig_object->link}', '$image_low_resolution_url', '$image_thumbnail_url', '$image_standard_resolution_url', '$video_low_resolution_url', '$video_standard_resolution_url', '$video_low_bandwidth_url')";
