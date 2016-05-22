@@ -100,7 +100,7 @@ header { position: relative; background-repeat: no-repeat; background-position: 
 /*
     Read More ... Link style
 */
-a.more-link {padding: 3px 15px; background-color: lighten(red, 15%); color: #FFF; display: block; border-radius: 2px; position:relative; left:50%; transform:translateX(-50%); width:120px; margin-top:13px;}
+a.more-link {padding: 3px 15px; background-color: lighten(red, 15%); color: #FFF; display: block; border-radius: 2px; position:relative; left:50%; transform:translateX(-50%); width:120px; margin-top:13px; text-align: center;}
 
 /*
     entry meta
@@ -126,12 +126,29 @@ article.post { margin-top: 20px;
 }
 
 // ** status post format ** //
+
+  // index and archive
 article.post.format-status .status-entry-container { background-color: #F4F4F4; position: relative;
   .post-thumbnail-container { position: absolute; bottom: 30px; max-width: 150px; z-index: 1; @media (min-width: $screen-sm-min) {bottom: 10px; max-width: 180px;} @media (min-width: $screen-md-min) {bottom: 20px;}
     .post-thumbnail { border-radius: 50%; border: solid 1px #95989A; padding-top: 100%; }
   }
-  .entry-content { min-height: 130px; color: $post-title-color; padding-top: 7px; padding-left: 30px; @media (min-width: $screen-sm-min) { padding-left: 15px;} @media (min-width: $screen-md-min) {min-height:150px;}}
+  .entry-content { padding-bottom: 35px; min-height: 130px; color: $post-title-color; padding-top: 7px; padding-left: 30px; @media (min-width: $screen-sm-min) { padding-left: 15px;} @media (min-width: $screen-md-min) {min-height:150px;}}
   .entry-footer { height: 36px; background-color:#EAEAEA; font-size: small; margin-bottom: 0; line-height: 36px; }
+
+  // hide share buttons in status post format, otherwise, it ruins the layout
+  .sharedaddy {display: none;}
+
+  // the more link
+  a.more-link {position: absolute; left: 50%; bottom: 10px; transform: translateX(-80%);background-color:rgba(162, 117, 187, .9); font-weight:bolder;}
+}
+
+  // single status post
+.single-post.single-format-status .post {
+  .entry-content { margin-top: 10px;
+    .post-thumbnail {width: 100%; padding-bottom: 100%; border-radius: 50%;}
+  }
+
+  .entry-footer{}
 }
 
 // ** audio post format ** //

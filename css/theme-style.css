@@ -248,7 +248,8 @@ a.more-link {
   left: 50%;
   transform: translateX(-50%);
   width: 120px;
-  margin-top: 13px; }
+  margin-top: 13px;
+  text-align: center; }
 
 /*
     entry meta
@@ -305,6 +306,7 @@ article.post.format-status .status-entry-container {
       border: solid 1px #95989A;
       padding-top: 100%; }
   article.post.format-status .status-entry-container .entry-content {
+    padding-bottom: 35px;
     min-height: 130px;
     color: #95989A;
     padding-top: 7px;
@@ -321,6 +323,22 @@ article.post.format-status .status-entry-container {
     font-size: small;
     margin-bottom: 0;
     line-height: 36px; }
+  article.post.format-status .status-entry-container .sharedaddy {
+    display: none; }
+  article.post.format-status .status-entry-container a.more-link {
+    position: absolute;
+    left: 50%;
+    bottom: 10px;
+    transform: translateX(-80%);
+    background-color: rgba(162, 117, 187, 0.9);
+    font-weight: bolder; }
+
+.single-post.single-format-status .post .entry-content {
+  margin-top: 10px; }
+  .single-post.single-format-status .post .entry-content .post-thumbnail {
+    width: 100%;
+    padding-bottom: 100%;
+    border-radius: 50%; }
 
 article.post.format-audio .entry-content {
   margin-top: 25px; }

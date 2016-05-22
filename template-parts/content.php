@@ -28,8 +28,7 @@ global $jk_utilities;
 		<div class="entry-meta">
 			<?php echo $jk_utilities->frontend->posted_meta(); ?>
 		</div><!-- .entry-meta -->
-		<?php
-		endif; ?>
+		<?php endif; ?>
 	</header><!-- .entry-header -->
 
 	<div class="entry-content">
