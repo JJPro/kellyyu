@@ -12,6 +12,9 @@ class JKKellyYuTheme {
 		JKThemeSetup::init();
 		$this->enqueue_scripts();
 
+		new JKJetpackIntegration();
+
+
 		$this->code_cleaning(); // clean up html code for final output: strip off versions
 	}
 
@@ -20,6 +23,7 @@ class JKKellyYuTheme {
 		require_once('inc/walker.php');
 		require_once('inc/class-jk-utilities.php'); 
 		require_once('inc/class-jk-theme-setup.php'); // structure setup
+		require_once('inc/class-jk-jetpack-integration.php');
 
 	}
 

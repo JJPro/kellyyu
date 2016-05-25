@@ -30,25 +30,26 @@ global $jk_utilities;
 			<div class="entry-meta">
 				<?php echo $jk_utilities->frontend->posted_meta(); ?>
 			</div><!-- .entry-meta -->
+			<?php echo apply_filters('entry_header', ''); ?>
 		</header><!-- .entry-header -->
 
 		<div class="entry-content">
-			<div class="container">
-				<div class="col-lg-2 col-sm-3 col-xs-5">
+			<div class="row">
+				<div class="col-lg-3 col-sm-3 col-xs-4">
 					<div class="post-thumbnail background-image " style="background-image: url(<?php echo get_the_post_thumbnail_url(); ?>);"></div>
 
 				</div> <!-- left -->
 
-				<div class="col-lg-10 col-sm-9 col-xs-7">
+				<div class="col-lg-9 col-sm-9 col-xs-8">
 					<?php the_content(); ?>
 				</div> <!-- right -->
 
-			</div> <!--.container-->
+			</div> <!--.row-->
 
 		</div> <!--.entry-content-->
 
 		<footer class="entry-footer">
-
+			<?php echo apply_filters('entry_footer', ''); ?>
 		</footer><!-- .entry-footer -->
 	<?php endif; ?>
 

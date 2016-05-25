@@ -24,19 +24,12 @@ class JKThemeSetup {
 		self::add_customize_controls(); // customize manager
 
 		if (! ($jk_utilities->frontend->is_user_from_mainland_china()) ) {
-			self::facebook_integration_js();
-			self::facebook_share_support(); // Facebook Sharing
-			self::facebook_video_oembed_provider();
 			self::youtube_short_url_oembed_provider();
-
 		}
 
+		self::facebook_integration();
 		self::weibo_integration();
-
-
-		self::google_analytics();
-		self::google_page_level_ads();
-		self::google_foot_banner_ads(); // Fixed positioned ads at the bottom Only show on small screens
+		self::google_integration();
 
 
 		self::rss();
@@ -44,6 +37,10 @@ class JKThemeSetup {
 		// ** corner cases ** //
 		// swap instagram js for chinese users
 		self::swap_instagram_js();
+
+
+		// ** Posts ** //
+		self::hide_unlisted_cat_from_home();
 	}
 
 	private static function theme_supports() {
@@ -59,7 +56,7 @@ class JKThemeSetup {
 			add_theme_support('html5', array( 'search-form', 'comment-form', 'comment-list', 'gallery', 'caption') );
 			add_theme_support('custom-header', $header_img_defaults); 
 			add_theme_support('title-tag');
-			add_theme_support('post-formats', array( /* 'aside', 'gallery', 'image', */ 'status', 'video', 'audio'));
+			add_theme_support('post-formats', array( /* 'aside', 'gallery', */ 'image', 'status', 'video', 'audio'));
 			add_theme_support('post-thumbnails');
 			/*
 			add_theme_support('infinite-scroll', array(
@@ -135,29 +132,7 @@ class JKThemeSetup {
 		new JKMetaBoxes();
 	}
 
-	private static function facebook_integration_js() {
-		add_action('jk_body_start', function(){
-			?>
-			<script>
-				window.fbAsyncInit = function() {
-					FB.init({
-						appId      : '879068418870248',
-						xfbml      : true,
-						version    : 'v2.6'
-					});
-				};
 
-				(function(d, s, id){
-					var js, fjs = d.getElementsByTagName(s)[0];
-					if (d.getElementById(id)) {return;}
-					js = d.createElement(s); js.id = id;
-					js.src = "//connect.facebook.net/en_US/sdk.js";
-					fjs.parentNode.insertBefore(js, fjs);
-				}(document, 'script', 'facebook-jssdk'));
-			</script>
-			<?php 
-		});
-	}
 
 	private static function widgets() {
 		require_once('class-jk-social-widget.php');
@@ -176,21 +151,7 @@ class JKThemeSetup {
 		});
 	}
 
-	private static function facebook_share_support(){
-		add_action('wp_head', function(){
-			global $jk_utilities;
 
-			// App ID
-			echo $jk_utilities->frontend->facebook_app_id_meta();
-
-			// Image
-			echo $jk_utilities->frontend->facebook_image_html();
-
-			// Other: URL, title, description, app_id
-			// this is done by Jetpack for you
-//			echo $jk_utilities->frontend->facebook_share_meta();
-		});
-	}
 
 	private static function ios_icons() {
 		add_action('wp_head', function(){
@@ -201,103 +162,6 @@ class JKThemeSetup {
 				<link rel="apple-touch-icon" sizes="114x114" href="<?php echo $img_dir; ?>ios-icon-114x114.png" />
 				<link rel="apple-touch-icon" sizes="144x144" href="<?php echo $img_dir; ?>ios-icon-144x144.png" />
 			<?php
-		});
-	}
-
-	private static function google_analytics() {
-		add_action('jk_body_start', function() {
-			?>
-				<!-- Google Analytics -->
-				<script>
-				  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-				  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-				  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-				  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-				  ga('create', 'UA-38993331-3', 'auto');
-				  ga('send', 'pageview');
-
-				</script>
-			<?php
-		});
-	}
-
-	private static function google_page_level_ads(){
-		add_action('wp_head', function(){
-			?>
-			<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-			<script>
-				(adsbygoogle = window.adsbygoogle || []).push({
-					google_ad_client: "ca-pub-0919081176944377",
-					enable_page_level_ads: true
-				});
-			</script>
-			<?php
-		});
-	}
-
-	private static function google_foot_banner_ads(){
-		// Only show on small screens
-		add_action( 'wp_footer', function(){
-			?>
-			<div class="google-foot-banner-ads">
-				<?php echo google_foot_banner_ads_code(); ?>
-			</div>
-
-			<?php echo google_foot_banner_ads_style(); ?>
-			<?php
-		});
-
-		function google_foot_banner_ads_code(){
-			return '<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-					<!-- mobile foot banner -->
-					<ins class="adsbygoogle"
-						 style="display:inline-block;width:320px;height:50px"
-						 data-ad-client="ca-pub-0919081176944377"
-						 data-ad-slot="1080114878"></ins>
-					<script>
-					(adsbygoogle = window.adsbygoogle || []).push({});
-					</script>';
-		}
-
-		function google_foot_banner_ads_style() {
-			return '<style>
-						.google-foot-banner-ads {
-							text-align: center;
-							position: fixed;
-							bottom: 0;
-							width:100%;
-							height:50px;
-							display: none;
-							z-index: 99;
-							/* background: rgba(255, 255, 255, 0.8); */
-							/* border-top: solid 1px rgba(0, 0, 0, 0.15); */
-						}
-
-						.google-foot-banner-ads ins.adsbygoogle {margin: 0 auto !important;}
-
-						@media screen and (max-width: 991px) {
-						  .google-foot-banner-ads {
-						  	display: block;
-						  }
-						  footer {
-						  	padding-bottom: 50px;
-						  }
-						}
-					</style>';
-		}
-	}
-
-	private static function facebook_video_oembed_provider(){
-		add_action('init', function(){
-			$endpoints = array(
-				'#https?://www\.facebook\.com/video.php.*#i'          => 'https://www.facebook.com/plugins/video/oembed.json/',
-				'#https?://www\.facebook\.com/.*/videos/.*#i'         => 'https://www.facebook.com/plugins/video/oembed.json/',
-			);
-
-			foreach($endpoints as $pattern => $endpoint) {
-				wp_oembed_add_provider( $pattern, $endpoint, true );
-			}
 		});
 	}
 
@@ -391,5 +255,27 @@ class JKThemeSetup {
 		});
 
 
+	}
+
+	private static function hide_unlisted_cat_from_home(){
+		add_filter('pre_get_posts', function($query){
+			if ( $query->is_home ){
+				$unlisted_cat = get_category_by_slug('unlisted');
+				if ($unlisted_cat){
+					$query->set('cat', '-' . $unlisted_cat->term_id);
+				}
+			}
+			return $query;
+		});
+	}
+
+	private static function facebook_integration(){
+		require_once('class-jk-facebook-integration.php');
+		new \inc\JKFacebookIntegration();
+	}
+
+	private static function google_integration(){
+		require_once('class-jk-google-integration.php');
+		new \inc\JKGoogleIntegration();
 	}
 }

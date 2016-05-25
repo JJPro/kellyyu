@@ -12,6 +12,42 @@ Usage: @include keyframes(name) {
           ...rules...
         }
  */
+.page-views-container {
+  border-radius: 4px;
+  background-color: rgba(118, 85, 136, 0.9);
+  position: relative;
+  display: inline-block;
+  min-width: 100px;
+  padding: 17px 15px;
+  margin-bottom: 5px; }
+  .page-views-container span.page-views {
+    color: #FFF;
+    font-size: 25px;
+    font-weight: bold;
+    width: 100%;
+    text-align: center;
+    display: inline-block;
+    transform: translateY(-13px); }
+  .page-views-container::after {
+    display: block;
+    content: 'Views';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    color: #FFF;
+    width: 100%;
+    height: 26px;
+    text-align: center;
+    border-top: 2px solid #FFF;
+    font-size: 14px;
+    font-weight: bold; }
+
+blockquote.instagram-media,
+iframe.instagram-media {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%); }
+
 a, a:hover, a:visited, a:focus {
   text-decoration: none; }
 
@@ -303,7 +339,7 @@ article.post.format-status .status-entry-container {
         bottom: 20px; } }
     article.post.format-status .status-entry-container .post-thumbnail-container .post-thumbnail {
       border-radius: 50%;
-      border: solid 1px #95989A;
+      /*border: solid 1px #95989A;*/
       padding-top: 100%; }
   article.post.format-status .status-entry-container .entry-content {
     padding-bottom: 35px;
@@ -329,7 +365,6 @@ article.post.format-status .status-entry-container {
     position: absolute;
     left: 50%;
     bottom: 10px;
-    transform: translateX(-80%);
     background-color: rgba(162, 117, 187, 0.9);
     font-weight: bolder; }
 
@@ -566,35 +601,6 @@ nav.pagination {
 
 .image-wall-page .entry-content {
   text-align: center; }
-  .image-wall-page .entry-content .page-views-container {
-    border-radius: 4px;
-    background-color: rgba(118, 85, 136, 0.9);
-    position: relative;
-    display: inline-block;
-    min-width: 100px;
-    padding: 17px 15px;
-    margin-bottom: 5px; }
-    .image-wall-page .entry-content .page-views-container span.page-views {
-      color: #FFF;
-      font-size: 25px;
-      font-weight: bold;
-      width: 100%;
-      text-align: center;
-      display: inline-block;
-      transform: translateY(-13px); }
-    .image-wall-page .entry-content .page-views-container::after {
-      display: block;
-      content: 'Views';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      color: #FFF;
-      width: 100%;
-      height: 26px;
-      text-align: center;
-      border-top: 2px solid #FFF;
-      font-size: 14px;
-      font-weight: bold; }
 
 ins.adsbygoogle {
   margin: 10px auto; }

@@ -95,59 +95,6 @@ class JKFrontendUtilities {
 		return $html;
 	}
 
-	public function facebook_app_id_meta(){
-		return '<meta property="fb:app_id" content="879068418870248" />';
-	}
-
-	public function facebook_image_html(){
-		if ( is_home() || is_front_page() ){
-			// site icon
-			$img_url = get_site_icon_url();
-
-		} else {
-			// use page thumbnail if exists
-			$img_url = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
-			if ($img_url) {
-				$img_url = $img_url[0];
-			}
-		}
-
-		if ($img_url) {
-//			error_log('facebook_img: ' . $img_url);
-			return '<link rel="image_src" href="' . $img_url . '" />';
-		}
-	}
-
-	public function facebook_share_meta(){
-
-		// URL
-		$url = home_url( $_SERVER['REQUEST_URI'] );
-
-		// Title
-		if ( is_home() || is_front_page() ) {
-			$title = get_bloginfo('name');
-		} elseif ( is_archive() ) {
-			$title = get_bloginfo('name') . ' &raquo; ' . get_the_archive_title();
-		} elseif ( is_single() ) {
-			$title = get_bloginfo('name') . ' &raquo; ' . get_the_title();
-		}
-
-		// Description
-		if ( is_home() || is_front_page() ) {
-			$description = get_bloginfo('description');
-		} elseif ( is_archive() ) {
-			$description = get_the_archive_description();
-		} elseif ( is_single() ) {
-			$description = get_the_excerpt();
-		}
-
-		?>
-		<meta property="og:url" content="<?php echo $url; ?>" />
-		<meta property="og:title" content="<?php echo $title; ?>" />
-		<meta property="og:description" content="<?php echo $description; ?>" />
-		<?php
-	}
-
 	// ** unused ** //
 	public function featured_image_html(){
 		if ( is_home() || is_front_page() ){
@@ -208,10 +155,14 @@ class JKFrontendUtilities {
 		$html = '<div class="external-audio">
 					<div class="row no-gutter">
 						<div class="col-xs-4 col-md-3 no-padding-left">
-							<div class="album-cover-container">
-								<div class="album-cover background-image" style="background-image:url(' . $cover . ');">
-								</div>
-							</div>
+							<div class="album-cover-container">';
+		if ( !is_singular() )
+			$html .= '<a href="' . get_the_permalink() . '">';
+		$html .=				'<div class="album-cover background-image" style="background-image:url(' . $cover . ');">
+								</div>';
+		if ( !is_singular() )
+			$html .= '</a>';
+		$html .=			'</div>
 						</div>
 						<div class="col-xs-8 col-md-9 no-padding-right">
 
@@ -319,9 +270,14 @@ class JKFrontendUtilities {
 			return;
 		} ?>
 
-
+		<?php if ( ! is_singular() ): ?>
+			<a href="<?php the_permalink(); ?>">
+		<?php endif; ?>
 		<div class="post-thumbnail background-image" style="background-image: url(<?php the_post_thumbnail_url(); ?>)">
 		</div><!-- .post-thumbnail -->
+		<?php if ( ! is_singular() ): ?>
+			</a>
+		<?php endif; ?>
 		<?php
 	}
 

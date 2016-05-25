@@ -29,6 +29,9 @@ global $jk_utilities;
 			<?php echo $jk_utilities->frontend->posted_meta(); ?>
 		</div><!-- .entry-meta -->
 		<?php endif; ?>
+
+		<?php echo apply_filters('entry_header', ''); ?>
+
 	</header><!-- .entry-header -->
 
 	<div class="entry-content">
@@ -36,6 +39,6 @@ global $jk_utilities;
 	</div><!-- .entry-content -->
 
 	<footer class="entry-footer">
-
+		<?php echo apply_filters('entry_footer', ''); ?>
 	</footer><!-- .entry-footer -->
 </article><!-- #post-## -->
