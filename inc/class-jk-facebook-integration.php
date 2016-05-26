@@ -31,7 +31,7 @@ class JKFacebookIntegration
         // ** Front End ** //
         if (! ($jk_utilities->frontend->is_user_from_mainland_china()) ) {
             $this->facebook_integration_js();
-            $this->facebook_share_support(); // Facebook Sharing
+            $this->facebook_share_meta_tags(); // Facebook Sharing
             $this->facebook_video_oembed_provider();
         }
     }
@@ -102,7 +102,11 @@ class JKFacebookIntegration
         });
     }
 
-    private function facebook_share_support(){
+    /**
+     * Share to Facebook meta tags:
+     * Providing to facebook informations like image, title, and description
+     */
+    private function facebook_share_meta_tags(){
         add_action('wp_head', function(){
             global $jk_utilities;
 
