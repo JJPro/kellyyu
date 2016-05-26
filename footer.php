@@ -23,9 +23,9 @@
 		    </div>
 	    </div>
 		<div class="site-info">
-			Some Rights Reserved.
+			<?php echo '&copy; ' . date('Y') . ' Kelly于文文'; ?>
 			<br>
-			<?php echo date('Y') . ' Every Kelly于文文 Video'; ?>
+			Some Rights Reserved.
 		</div><!-- .site-info -->
 	</footer><!-- #colophon -->
 </div><!-- #page -->
