@@ -120,27 +120,24 @@ class JKShortcodes {
 				$jk_utilities->admin->increase_post_views(get_the_ID());
 			$views = $jk_utilities->admin->get_post_views(get_the_ID());
 
-			echo '<div class="page-views-container"><span class="page-views">' . $views . '</span></div>';
-
+			return '<span class="page-views-container"><span class="page-views">' . $views . '</span></span>';
 		});
 	}
 
 	private function google_ads() {
 		add_shortcode( 'google_ads', function($atts){
-			?>
-			<div class="text-center">
-				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-				<!-- everkellyyuvideo - responsive -->
-				<ins class="adsbygoogle"
-					 style="display:block"
-					 data-ad-client="ca-pub-0919081176944377"
-					 data-ad-slot="1012846478"
-					 data-ad-format="auto"></ins>
-				<script>
-					(adsbygoogle = window.adsbygoogle || []).push({});
-				</script>
-			</div>
-			<?php
+			return '<div class="text-center">
+						<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+						<!-- everkellyyuvideo - responsive -->
+						<ins class="adsbygoogle"
+							 style="display:block"
+							 data-ad-client="ca-pub-0919081176944377"
+							 data-ad-slot="1012846478"
+							 data-ad-format="auto"></ins>
+						<script>
+							(adsbygoogle = window.adsbygoogle || []).push({});
+						</script>
+					</div>';
 		});
 	}
 }
