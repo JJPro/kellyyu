@@ -7,6 +7,9 @@ class JKThemeSetup {
 
 	public static function init() {
 		global $jk_utilities;
+
+		self::user_caps();
+
 		self::theme_supports();
 		self::add_sidebars();
 		self::customize_title_tag(); // <title> in <head> element
@@ -41,6 +44,14 @@ class JKThemeSetup {
 
 		// ** Posts ** //
 		self::hide_unlisted_cat_from_home();
+		self::the_more_link();
+	}
+
+	private static function user_caps(){
+		// give contributor ability to upload files
+		$role = get_role( 'contributor' );
+
+		$role->add_cap( 'upload_files' );
 	}
 
 	private static function theme_supports() {
@@ -277,5 +288,11 @@ class JKThemeSetup {
 	private static function google_integration(){
 		require_once('class-jk-google-integration.php');
 		new \inc\JKGoogleIntegration();
+	}
+
+	private static function the_more_link(){
+		add_filter( 'the_content_more_link', function( $link ){
+			return '<span class="more-link-ellipsis">......</span>' . $link;
+		} );
 	}
 }

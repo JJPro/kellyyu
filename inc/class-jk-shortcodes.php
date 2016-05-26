@@ -120,7 +120,9 @@ class JKShortcodes {
 				$jk_utilities->admin->increase_post_views(get_the_ID());
 			$views = $jk_utilities->admin->get_post_views(get_the_ID());
 
-			echo '<div class="page-views-container"><span class="page-views">' . $views . '</span></div>';
+			echo 'hello';
+
+//			echo '<div class="page-views-container"><span class="page-views">' . $views . '</span></div>';
 
 		});
 	}

@@ -102,7 +102,9 @@ header { position: relative; background-repeat: no-repeat; background-position: 
 /*
     Read More ... Link style
 */
-a.more-link {padding: 3px 15px; background-color: lighten(red, 15%); color: #FFF; display: block; border-radius: 2px; position:relative; left:50%; transform:translateX(-50%); width:120px; margin-top:13px; text-align: center;}
+span.more-link-ellipsis {display: block;}
+a.more-link {padding: 3px 15px; background-color:rgba(162, 117, 187, .9); font-weight:bolder; color: #FFF; display: block; border-radius: 2px; position:relative; left:50%; transform:translateX(-50%); width:120px; margin-top:13px; text-align: center;}
+
 
 /*
     entry meta

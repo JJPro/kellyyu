@@ -274,9 +274,13 @@ header {
 /*
     Read More ... Link style
 */
+span.more-link-ellipsis {
+  display: block; }
+
 a.more-link {
   padding: 3px 15px;
-  background-color: #ff4d4d;
+  background-color: rgba(162, 117, 187, 0.9);
+  font-weight: bolder;
   color: #FFF;
   display: block;
   border-radius: 2px;
