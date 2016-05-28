@@ -22,7 +22,7 @@ class JKThemeSetup {
 		self::embeds();
 		self::shortcodes();
 		self::post_metas(); // meta-boxes
-		self::short_nav_text();
+		self::short_nav_text(); // ellipsis long navigation link
 
 		self::add_customize_controls(); // customize manager
 

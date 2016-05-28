@@ -21,7 +21,7 @@ class JKKellyYuTheme {
 	private function includes() {
 		require_once('inc/globals.php');
 		require_once('inc/walker.php');
-		require_once('inc/class-jk-utilities.php'); 
+		require_once('inc/class-jk-utilities.php');
 		require_once('inc/class-jk-theme-setup.php'); // structure setup
 		require_once('inc/class-jk-jetpack-integration.php');
 
@@ -33,6 +33,14 @@ class JKKellyYuTheme {
 
 	// ** enqueue scripts, styles, and fonts ** //
 	private function enqueue_scripts() {
+		add_action( 'admin_enqueue_scripts', function(){
+
+			// ** iCon Fonts ** //
+			wp_enqueue_style( 'jk-font', get_template_directory_uri() . '/fonts/jk-font/styles.css', false, '1.0', 'all');
+
+		});
+
+
 		add_action( 'wp_enqueue_scripts', function(){
 			// ** Scripts ** //
 			wp_enqueue_script( 'bootstrap', get_template_directory_uri() . '/js/bootstrap.min.js', ['jquery-core'], '3.3.6', true );
@@ -51,24 +59,25 @@ class JKKellyYuTheme {
 			$primary_menu_text_color = get_theme_mod('primary_menu_text_color' );
 			$primary_menu_text_hover_color = get_theme_mod('primary_menu_text_hover_color' );
 			wp_add_inline_style(
-				'jk-style', 
-				"nav.main-navigation li a, 
+				'jk-style',
+				"nav.main-navigation li a,
 				 nav.main-navigation .search-form {
 					color: $primary_menu_text_color;
 				 }
 
-				 .nav-tabs>li>a:visited { 
+				 .nav-tabs>li>a:visited {
 				 	color: $primary_menu_text_color;
 				 }
-				 .nav-tabs>li.active>a:hover, 
-				 .nav-tabs>li.active>a:visited, 
-				 .nav-tabs>li>a:hover { 
+				 .nav-tabs>li.active>a:hover,
+				 .nav-tabs>li.active>a:visited,
+				 .nav-tabs>li>a:hover {
 				 	color: $primary_menu_text_hover_color;
 				 }
 				 "
 			);
 
 		});
+
 	}
 
 }

@@ -98,3 +98,15 @@
 .icon-comment-discussion:before {
   content: "\73";
 }
+.icon-sina-weibo:before {
+  content: "\75";
+}
+.icon-tencent-weibo:before {
+  content: "\76";
+}
+.icon-renren:before {
+  content: "\77";
+}
+.icon-wechat:before {
+  content: "\78";
+}

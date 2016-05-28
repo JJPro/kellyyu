@@ -21,7 +21,7 @@ class JKJetpackIntegration
     }
 
     private function reposition_related_posts(){
-
+        if ( JETPACK_DEV_DEBUG ) return;
         add_filter( 'wp', function(){
             $jrp = Jetpack_RelatedPosts::init();
             $callback = array( $jrp, 'filter_add_target_to_dom');
@@ -49,8 +49,61 @@ class JKJetpackIntegration
     }
 
     private function add_sharing_services(){
+
+        // jk-font sharing services icons in admin preview screen
+        add_action( 'admin_head', 'services_styles');
+        add_action( 'wp_head', 'services_styles');
+
+        function services_styles(){
+            ?>
+            <style>
+                /* WECHAT */
+                li.service.share-wechat span::before,
+                .sd-content ul li.share-wechat a::before {
+                    font-family: 'jk-font';
+                    content: '\x';
+                }
+                li.service.share-wechat span::before,
+                .sd-content ul li.share-wechat a:not(.no-text)::before {
+                    margin-right: 5px;
+                }
+                .sd-content ul li.share-wechat a.share-wechat.sd-button.share-icon.no-text {
+                    background-color: #35b900;
+                    color: #FFF !important;
+                }
+
+
+                /* SINA WEIBO */
+                li.service.share-sina-weibo span::before,
+                .sd-content ul li.share-sina-weibo a:not(.no-text)::before {
+                    font-family: 'jk-font';
+                    content: '\u';
+                }
+                li.service.share-sina-weibo span::before,
+                .sd-content ul li.share-sina-weibo a:not(.no-text)::before {
+                    margin-right: 5px;
+                }
+                .sd-content ul li.share-sina-weibo a.no-text::before {
+                    width: 16px;
+                    height: 16px;
+                    position: relative;
+                    transform: scale(0.132) translateX(-390%) translateY(-360%);
+                    content: url(<?php echo get_template_directory_uri() . '/img/sina_weibo.png'; ?>);
+                    /*content: url("http://open.weibo.com/favicon.ico");*/
+                }
+                .sd-content ul li.share-sina-weibo a.share-sina-weibo.sd-button.share-icon.no-text {
+                    background-color: #f7e175;
+                    color: #d70021 !important;
+                }
+
+            </style>
+            <?php
+        }
+
         add_filter('sharing_services', function($services){
-//            $services['kk'] = 'wljlkjechat';
+            require_once('jk-jetpack-sharing-sources.php');
+            $services['wechat'] = 'Share_Wechat';
+            $services['sina-weibo'] = 'Share_Sina_Weibo';
             return $services;
         });
     }
