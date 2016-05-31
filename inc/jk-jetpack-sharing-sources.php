@@ -18,6 +18,9 @@ class Share_Wechat extends Sharing_Source {
         return '微信';
     }
 
+    public function display_footer(){
+    }
+
     public function display_header(){
     }
 
@@ -47,11 +50,6 @@ class Share_Wechat extends Sharing_Source {
         // Redirect to QR Code script
         wp_redirect( $qr_code_url );
         die();
-    }
-
-    public function display_footer()
-    {
-        $this->js_dialog( $this->get_id() );
     }
 
 

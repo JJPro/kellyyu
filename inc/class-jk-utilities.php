@@ -150,6 +150,12 @@ class JKFrontendUtilities {
 		$mp3 = $data['mp3'];
 		$cover = is_numeric($data['cover']) ? wp_get_attachment_image_src( $data['cover'], 'full' )[0] : $data['cover'];
 
+		$autoplay = $loop = '';
+		if ( is_single() ) {
+			$autoplay = 'autoplay="true"';
+			$loop = 'loop="loop"';
+		}
+
 		// error_log(print_r($cover, true));
 
 		$html = '<div class="external-audio">
@@ -177,7 +183,7 @@ class JKFrontendUtilities {
 						</div> <!-- .col-xs-8 -->
 					</div> <!-- .row -->
 					<div class="player col-sm-8 col-sm-offset-4">
-						<audio src="' . $mp3 . '" preload="metadata" ></audio>
+						<audio src="' . $mp3 . '" preload="metadata" ' . $autoplay . ' ' . $loop . '></audio>
 						
 						<div class="row">
 							<div class="col-xs-2 no-padding-right no-padding-left">

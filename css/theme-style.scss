@@ -84,6 +84,7 @@ header { position: relative; background-repeat: no-repeat; background-position: 
   &:focus, &:hover, &:visited {border: none; background-color: transparent;}
 }
 // ** establish new rules ** //
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover { color: #FFF }
 .nav-tabs {display: inline-block;}
 .nav-tabs>li>a {
   &::after { content: ''; display: block; width: auto; height: 3px; background-color: $header-font-color; opacity: 0; @include transform(translateY(15px)); @include transition(all, 320ms); }

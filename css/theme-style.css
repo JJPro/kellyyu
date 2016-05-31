@@ -228,6 +228,9 @@ header {
     border: none;
     background-color: transparent; }
 
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+  color: #FFF; }
+
 .nav-tabs {
   display: inline-block; }
 

@@ -137,5 +137,6 @@
 
 	// ** All ** //
 	$('[data-toggle="tooltip"]').tooltip({html:true});
+	$('.widget-grid-view-image [data-bump-view="tp"]').tooltip({placement: 'auto', html: true});
 
 })(jQuery);

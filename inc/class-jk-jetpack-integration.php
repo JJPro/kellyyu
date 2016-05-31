@@ -57,6 +57,11 @@ class JKJetpackIntegration
         function services_styles(){
             ?>
             <style>
+                /* Some breathing room above sharedaddy */
+                .entry-content .sharedaddy {
+                    margin-top: 15px;
+                }
+
                 /* WECHAT */
                 li.service.share-wechat span::before,
                 .sd-content ul li.share-wechat a::before {
@@ -95,6 +100,7 @@ class JKJetpackIntegration
                     background-color: #f7e175;
                     color: #d70021 !important;
                 }
+
 
             </style>
             <?php
