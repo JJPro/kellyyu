@@ -21,7 +21,7 @@ class JKJetpackIntegration
     }
 
     private function reposition_related_posts(){
-        if ( JETPACK_DEV_DEBUG ) return;
+        if ( defined('JETPACK_DEV_DEBUG') && JETPACK_DEV_DEBUG ) return;
         add_filter( 'wp', function(){
             $jrp = Jetpack_RelatedPosts::init();
             $callback = array( $jrp, 'filter_add_target_to_dom');

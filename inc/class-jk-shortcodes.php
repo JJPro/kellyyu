@@ -8,7 +8,7 @@ class JKShortcodes {
 	public function __construct() {
 		$this->video_mix();
 		$this->text_mix();
-		$this->views_count();
+		$this->jk_views(); // views count
 		$this->google_ads();
 	}
 
@@ -16,8 +16,9 @@ class JKShortcodes {
 		add_shortcode( 'video_mix', function( $atts ) {
 			global $jk_utilities;
 			$defaults = array(
-				'youtube' => '',
 				'youku' => '',
+				'qq' => '',
+				'youtube' => '',
 				'facebook' => '',
 				'responsive_class' => 'embed-responsive-16by9',
 				'container_max_width' => '',
@@ -25,7 +26,7 @@ class JKShortcodes {
 			$atts = shortcode_atts($defaults, $atts);
 
 			if ( $jk_utilities->frontend->is_user_from_mainland_china() ) {
-				$video = $atts['youku'];
+				$video = $atts['youku'] ? $atts['youku'] : $atts['qq'];
 			} else {
 				$video = $atts['youtube'] ? $atts['youtube'] : $atts['facebook'];
 			}
@@ -69,6 +70,19 @@ class JKShortcodes {
 					$embed_html = '<iframe width=800 height=450 src="' . esc_attr($src) . '" frameorder=0 allowfullscreen></iframe>';
 				}
 
+			} elseif ( $video == $atts['qq'] ) {
+				$matches = array();
+				if ( stripos($video, 'vid=') !== false ){
+					preg_match( '/(?<=vid=)\w+/', $video, $matches );
+				} else {
+					preg_match( '/[^\/]+(?=\.html)/', $video, $matches );
+				}
+
+				if ($matches) {
+					// compose the HTML
+					$vid = $matches[0];
+					$embed_html = '<iframe frameborder="0" width="640" height="498" src="http://v.qq.com/iframe/player.html?vid=' . $vid . '&tiny=1&auto=0" allowfullscreen></iframe>';
+				}
 			} elseif ( $video == $atts['facebook'] ) {
 				$embed_html = wp_oembed_get( $video, array('width' => '800', 'height' => '450'));
 			} else { // youtube
@@ -113,7 +127,7 @@ class JKShortcodes {
 		});
 	}
 
-	private function views_count(){
+	private function jk_views(){
 		add_shortcode( 'jk_views', function( $atts ) {
 			global $jk_utilities;
 			if ( !current_user_can('administrator') )
@@ -140,4 +154,5 @@ class JKShortcodes {
 					</div>';
 		});
 	}
+
 }

@@ -134,9 +134,52 @@
 		//$('.main-navigation').slideToggle();
 	});
 
+	/**
+	 * Login Modal
+	 */
+	$(".btn-login").click(function(e){
+		e.preventDefault()
+
+		$('#modal_login').modal('show');
+		$('.nav-tabs a[href="#tab-user-login"]').tab('show');
+	});
+
 
 	// ** All ** //
 	$('[data-toggle="tooltip"]').tooltip({html:true});
 	$('.widget-grid-view-image [data-bump-view="tp"]').tooltip({placement: 'auto', html: true});
 
 })(jQuery);
+
+function loginToFacebook(){
+	FB.getLoginStatus(function(response){
+		fbStatusChangeCallBack(response);
+	});
+}
+
+function fbStatusChangeCallBack(response){
+	// The response object is returned with a status field that lets the
+	// app know the current login status of the person.
+	// Full docs on the response object can be found in the documentation
+	// for FB.getLoginStatus().
+	if (response.status === 'connected') {
+		// Logged into your app and Facebook.
+		// testAPI();
+		FB.api('/me', function(response){
+			console.log('You are loggedin as ' + response.name);
+
+		});
+	} else if (response.status === 'not_authorized') {
+		// The person is logged into Facebook, but not your app.
+	} else {
+		// The person is not logged into Facebook, so we're not sure if
+		// they are logged into this app or not.
+		FB.login(function(response){
+			console.log('popup window should shown');
+		})
+	}
+}
+
+function loginToSinaWeibo(){
+
+}

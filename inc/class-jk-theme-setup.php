@@ -15,6 +15,7 @@ class JKThemeSetup {
 		self::customize_title_tag(); // <title> in <head> element
 		self::register_nav_menus();
 		self::append_search_box_to_primary_menu();
+		self::append_user_profile_button_to_primary_navigation();
 		self::wechat_img();
 		self::ios_icons();
 		self::widgets();
@@ -95,6 +96,24 @@ class JKThemeSetup {
 			return $items;
 		}
 		add_filter( 'wp_nav_menu_items', 'append_search_box_to_primary_menu', 10, 2 );
+	}
+
+	private static function append_user_profile_button_to_primary_navigation(){
+		global $jk_utilities;
+		function append_user_profile_button_to_visible_xs_menu( $items, $args ){
+			global $jk_utilities;
+			if ( $args->theme_location == 'primary-visible-xs' ){
+				$items .= '<li>' . $jk_utilities->frontend->get_profile_button() . '</li>';
+			}
+
+			return $items;
+		}
+		add_filter( 'wp_nav_menu_items', 'append_user_profile_button_to_visible_xs_menu', 10, 2 );
+		add_action( 'wp_footer', function() use ($jk_utilities){
+
+			echo $jk_utilities->frontend->get_login_modal();
+
+		});
 	}
 
 	private static function customize_title_tag() {

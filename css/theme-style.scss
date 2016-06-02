@@ -2,6 +2,7 @@
 @import "sass_base/mixins";
 @import "sass_base/shortcode-views-count";
 @import "sass_base/instagram";
+@import "sass_base/login-modal";
 //@import "sass_base/ceaser-easing";
 
 // ** clean links ** //
@@ -30,10 +31,16 @@ a {
 body {-webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;}
 .background-image { background-position: center center; background-size: cover; background-repeat: no-repeat; }
 
+table { border: solid 3px gray;
+  th, td { border: solid 1px; padding: 5px;}
+  th {font-weight: bolder; }
+}
+
+
 header { position: relative; background-repeat: no-repeat; background-position: top center; background-size: contain;
   .nav-container {position: absolute; bottom: 0; left: 0; right: 0; font-size: medium; font-weight: bold;border-radius: 0; margin-bottom: 0;background: rgba( 255,255,255,0.2); border-top: 1px solid rgba( 255,255,255,0.1); @include transition(background, 0.3s);
     // ** make up the sandwich ** //
-    .nav-toggle {position: relative; width: 100%; height: 2.5em; background: transparent; border: none; margin: 0; padding: 0; z-index:3;
+    .nav-toggle {position: relative; width: 100%; height: 2.5em; background: transparent; border: none; margin: 0; padding: 0; z-index:100;
       &:focus {outline: none;}
       span {position: absolute; width: 2em; height: 4px; background: #FFF; left: 50%; top: 50%; transform: translateX(-50%) translateY(-50%);
         &::before, &::after { content: ''; position: absolute; width: 100%; height: 100%; background: #FFF; left: 0;}
@@ -75,28 +82,33 @@ header { position: relative; background-repeat: no-repeat; background-position: 
 /*
     Nav Bar style
  */
-// ** clear bootstrap default style ** //
-.nav-tabs {border-bottom: none;}
-.nav-tabs>li>a{border: none; border-radius: 0;
-  &:focus, &:hover, &:visited {background-color: transparent; }
-}
-.nav-tabs>li.active>a{border: none; background-color: transparent;
-  &:focus, &:hover, &:visited {border: none; background-color: transparent;}
-}
-// ** establish new rules ** //
-.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover { color: #FFF }
-.nav-tabs {display: inline-block;}
-.nav-tabs>li>a {
-  &::after { content: ''; display: block; width: auto; height: 3px; background-color: $header-font-color; opacity: 0; @include transform(translateY(15px)); @include transition(all, 320ms); }
-  &:focus, &:hover, &:visited {
-    &::after { opacity: 1; @include transform(translateY(0)); }
+#site-navigation {
+  // ** clear bootstrap default style ** //
+  .nav-tabs {border-bottom: none;}
+  .nav-tabs>li>a{border: none; border-radius: 0;
+    &:focus, &:hover, &:visited {background-color: transparent; }
   }
-}
-.nav-tabs>li.active>a {
-  &, &:focus, &:hover, &:visited {
-    &::after { opacity: 1; @include transform(translateY(0)); height: 4px;}
+  .nav-tabs>li.active>a{border: none; background-color: transparent;
+    &:focus, &:hover, &:visited {border: none; background-color: transparent;}
   }
+  // ** establish new rules ** //
+  .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover { color: #FFF }
+  .nav-tabs {display: inline-block;}
+  .nav-tabs>li>a {
+    &::after { content: ''; display: block; width: auto; height: 3px; background-color: $header-font-color; opacity: 0; @include transform(translateY(15px)); @include transition(all, 320ms); }
+    &:focus, &:hover, &:visited {
+      &::after { opacity: 1; @include transform(translateY(0)); }
+    }
+  }
+  .nav-tabs>li.active>a {
+    &, &:focus, &:hover, &:visited {
+      &::after { opacity: 1; @include transform(translateY(0)); height: 4px;}
+    }
+  }
+
+  .btn-login { cursor: pointer;}
 }
+
 
 .site-content { margin-top: 20px; @media (max-width: $screen-xs-min) {margin-top: 1px;} }
 
@@ -205,8 +217,8 @@ article.post.format-video {
 // ** primary navigation on small & md screens ** //
 @media (max-width: $screen-md-max) {
   header .nav-container { background-color: rgba(0,0,0,0.15); transition-delay: 0.3s;
-    .main-navigation { position:absolute; left: 0; background-color: rgba(0,0,0,0.9); z-index:2; width: 100%; max-height: 0;overflow:hidden; transition-property: max-height; transition-duration: 0.6s; transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-      ul {display: block;}
+    .main-navigation { position:absolute; left: 0; background-color: rgba(0,0,0,0.9); z-index:100; width: 100%; max-height: 0;overflow:hidden; transition-property: max-height; transition-duration: 0.6s; transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      ul {display: block !important;}
       ul:last-of-type { margin-bottom: 2em; } // add some margin below menu
       li {display: block; width: 100%; // stretch each menu item to take up the full width
         .search-form {
@@ -214,11 +226,10 @@ article.post.format-video {
         }
       }
     }
-    &.is-active .main-navigation {max-height:500px; } // animate max-height, because animating height doesn't work
+    &.is-active .main-navigation {max-height:1000px; } // animate max-height, because animating height doesn't work
     &.is-active { background-color: rgba(0,0,0,0.9); transition-delay: 0s; // animate background
 
     }
-
   }
 }
 
@@ -334,3 +345,4 @@ div[id^=wpdevar_comment] {
 // ** Post Thumbnail ** //
 .post.format-standard .post-thumbnail { height: 300px;
 }
+

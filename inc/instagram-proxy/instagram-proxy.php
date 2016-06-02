@@ -31,67 +31,71 @@ $is_media_request = preg_match('/\/media\//', $request);
 if ($callback){
     $request = preg_replace('/&callback=.+$/', '', $request);
 }
-
-$response = file_get_contents($request);
-
 error_log('request: ' . $request);
-//error_log('response: ' . $response);
 
-$response_obj = json_decode($response);
-//error_log('response_obj: ' . print_r($response_obj, true));
+$response = curl_get_contents($request);
+
+error_log('response: ' . $response);
 
 
+if ( $response ){
 
-// replace media links with cache
-if ( $is_media_request ) {
+    $response_obj = json_decode($response);
+    //error_log('response_obj: ' . print_r($response_obj, true));
 
-//    error_log('fetching media ...');
 
-    //$response_obj->data is array of images
+    if ( $response_obj->meta->code == '200' ) {
+        // replace media links with cache
+        if ($is_media_request) {
 
-    foreach ($response_obj->data as &$ig_object){
+            //    error_log('fetching media ...');
 
-        // retrieve cache, download if new, media files
-        $media_urls = get_media($ig_object);
+            //$response_obj->data is array of images
 
-//        error_log('fetched urls: ' . print_r($media_urls, true));
+            foreach ($response_obj->data as &$ig_object) {
 
-        // Alter user profile_picture with cached
-        $ig_object->user->profile_picture = $media_urls['profile_picture'];
+                // retrieve cache, download if new, media files
+                $media_urls = get_media($ig_object);
 
-        // Alter images with cached
-        $ig_object->images->low_resolution->url = $media_urls['image_low_resolution'];
-        $ig_object->images->thumbnail->url = $media_urls['image_thumbnail'];
-        $ig_object->images->standard_resolution->url = $media_urls['image_standard_resolution'];
+                //        error_log('fetched urls: ' . print_r($media_urls, true));
 
-        // Alter videos with cached
-        if ($ig_object->type == 'video') {
-            $ig_object->videos->low_resolution->url = $media_urls['video_low_resolution'];
-            $ig_object->videos->standard_resolution->url = $media_urls['video_standard_resolution'];
-            $ig_object->videos->low_bandwidth->url = $media_urls['video_low_bandwidth'];
+                // Alter user profile_picture with cached
+                $ig_object->user->profile_picture = $media_urls['profile_picture'];
+
+                // Alter images with cached
+                $ig_object->images->low_resolution->url = $media_urls['image_low_resolution'];
+                $ig_object->images->thumbnail->url = $media_urls['image_thumbnail'];
+                $ig_object->images->standard_resolution->url = $media_urls['image_standard_resolution'];
+
+                // Alter videos with cached
+                if ($ig_object->type == 'video') {
+                    $ig_object->videos->low_resolution->url = $media_urls['video_low_resolution'];
+                    $ig_object->videos->standard_resolution->url = $media_urls['video_standard_resolution'];
+                    $ig_object->videos->low_bandwidth->url = $media_urls['video_low_bandwidth'];
+                }
+
+            }
+
+        } else { // this is a user info request,
+
+            //    error_log('Requesting for user profile picture');
+            // ** cache user profile picture (user's "id" as key in link field, "profile_picture" as value in thumbnail field) ** //
+            $profile_picture = get_user_profile_picture($response_obj->data);
+            if ($profile_picture) {
+                //        error_log('profile picture is found in cache');
+                $response_obj->data->profile_picture = $profile_picture;
+            }
+
         }
 
+
+        // ** restore the callback function to the next_url field ** //
+        if (isset($response_obj->pagination->next_url) && $callback)
+            $response_obj->pagination->next_url .= '&callback=' . $callback;
+
+        $response = json_encode($response_obj);
     }
-
-} else { // this is a user info request,
-
-//    error_log('Requesting for user profile picture');
-    // ** cache user profile picture (user's "id" as key in link field, "profile_picture" as value in thumbnail field) ** //
-    $profile_picture = get_user_profile_picture($response_obj->data);
-    if ($profile_picture){
-//        error_log('profile picture is found in cache');
-        $response_obj->data->profile_picture = $profile_picture;
-    }
-
 }
-
-
-
-// ** restore the callback function to the next_url field ** //
-if ( isset($response_obj->pagination->next_url) && $callback )
-    $response_obj->pagination->next_url .= '&callback=' . $callback;
-
-$response = json_encode($response_obj);
 
 
 if ($callback) {
@@ -100,7 +104,7 @@ if ($callback) {
 //    header('Access-Control-Max-Age: 3628800');
 //    header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
     echo $callback . '(' . $response . ')';
-//    error_log('final response: ' . $callback . '(' . $response . ')');
+    error_log('final response: ' . $callback . '(' . $response . ')');
 } else {
     // normal JSON string
     header('Content-Type: application/json; charset=utf-8');
@@ -348,4 +352,16 @@ function _cache_profile_picture($ig_object){
     } else {
         return false;
     }
+}
+
+function curl_get_contents($url)
+{
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+    $data = curl_exec($ch);
+    curl_close($ch);
+    return $data;
 }

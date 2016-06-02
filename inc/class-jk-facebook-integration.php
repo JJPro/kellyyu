@@ -25,8 +25,10 @@ class JKFacebookIntegration
         global $jk_utilities;
 
         // ** Back End ** //
-        $this->load_facebook_sdk();
-        $this->auto_scrape_on_update();
+        if ( !defined('WP_DEBUG') || false == WP_DEBUG ){
+            $this->load_facebook_sdk();
+            $this->auto_scrape_on_update();
+        }
 
         // ** Front End ** //
         if (! ($jk_utilities->frontend->is_user_from_mainland_china()) ) {

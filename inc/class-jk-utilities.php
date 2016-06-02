@@ -48,6 +48,187 @@ class JKAdminUtilities {
 
 class JKFrontendUtilities {
 
+	public function get_profile_button( $echo=false ){
+		if ( is_user_logged_in() ){
+			$output = '';
+			// TODO: show user profile image when logged in.
+		} else {
+			$output = '<a class="btn-login" data-opentab="#tab-user-login">登录</a>';
+		}
+
+		if ( $echo )
+			echo $output;
+		else
+			return $output;
+	}
+
+	public function get_login_modal( $echo=false ){
+		$output = '';
+		if ( ! is_user_logged_in() ) {
+			$output .= '<div id="modal_login" class="modal fade" role="form">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-body">
+										<ul class="nav nav-tabs" role="tablist">
+											<li class="active">
+												<a href="#tab-admin-login" role="tab" data-toggle="tab">管理员</a>
+											</li>
+											<li>
+												<a href="#tab-user-login" role="tab" data-toggle="tab">用户</a>
+											</li>
+										</ul>
+
+										<div class="tab-content">
+											<div class="tab-pane active" id="tab-admin-login">
+												<!-- content of admin login panel -->
+												'. $this->admin_login_form( array( 'echo' => false )) .'
+											</div> <!-- #tab-admin-login -->
+
+											<div class="tab-pane" id="tab-user-login">
+												<!-- content of user login panel -->
+												'. $this->user_login_form( array( 'echo' => false )) .'
+											</div> <!-- #tab-user-login -->
+										</div> <!-- .tab-content -->
+									</div> <!-- .modal-body -->
+								</div> <!-- .modal-content -->
+							</div> <!-- .modal-dialog -->
+						</div> <!-- .modal -->
+						';
+		}
+
+		if ( $echo )
+			echo $output;
+		else
+			return $output;
+	}
+
+	public function admin_login_form( $args=array() ){
+		$defaults = array(
+			'echo' => true,
+			// Default 'redirect' value takes the user back to the request URI.
+			'redirect' => ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
+			'form_id' => 'loginform',
+			'label_username' => __( 'Username or Email' ),
+			'label_password' => __( 'Password' ),
+			'label_remember' => __( 'Remember Me' ),
+			'label_log_in' => __( 'Log In' ),
+			'id_username' => 'user_login',
+			'id_password' => 'user_pass',
+			'id_remember' => 'rememberme',
+			'id_submit' => 'wp-submit',
+			'remember' => true,
+			'value_username' => '',
+			// Set 'value_remember' to true to default the "Remember me" checkbox to checked.
+			'value_remember' => false,
+		);
+
+		/**
+		 * Filter the default login form output arguments.
+		 *
+		 * @since 3.0.0
+		 *
+		 * @see wp_login_form()
+		 *
+		 * @param array $defaults An array of default login form arguments.
+		 */
+		$args = wp_parse_args( $args, apply_filters( 'login_form_defaults', $defaults ) );
+
+		/**
+		 * Filter content to display at the top of the login form.
+		 *
+		 * The filter evaluates just following the opening form tag element.
+		 *
+		 * @since 3.0.0
+		 *
+		 * @param string $content Content to display. Default empty.
+		 * @param array  $args    Array of login form arguments.
+		 */
+		$login_form_top = apply_filters( 'login_form_top', '', $args );
+
+		/**
+		 * Filter content to display in the middle of the login form.
+		 *
+		 * The filter evaluates just following the location where the 'login-password'
+		 * field is displayed.
+		 *
+		 * @since 3.0.0
+		 *
+		 * @param string $content Content to display. Default empty.
+		 * @param array  $args    Array of login form arguments.
+		 */
+		$login_form_middle = apply_filters( 'login_form_middle', '', $args );
+
+		/**
+		 * Filter content to display at the bottom of the login form.
+		 *
+		 * The filter evaluates just preceding the closing form tag element.
+		 *
+		 * @since 3.0.0
+		 *
+		 * @param string $content Content to display. Default empty.
+		 * @param array  $args    Array of login form arguments.
+		 */
+		$login_form_bottom = apply_filters( 'login_form_bottom', '', $args );
+
+		$form = '
+		<form name="' . $args['form_id'] . '" id="' . $args['form_id'] . '" action="' . esc_url( site_url( 'wp-login.php', 'login_post' ) ) . '" method="post">
+			' . $login_form_top . '
+			<div class="form-group form-group-has-icon">
+				<label for="' . esc_attr( $args['id_username'] ) . '" class="sr-only">' . esc_html( $args['label_username'] ) . '</label>
+				<label for="' . esc_attr( $args['id_username'] ) . '" class="form-control-icon"><i class="jk-font icon-envelope"></i></label>
+				<input type="text" name="log" id="' . esc_attr( $args['id_username'] ) . '" class="form-control" value="' . esc_attr( $args['value_username'] ) . '" placeholder="' . esc_html( $args['label_username']) . '" />
+			</div>
+			<div class="form-group form-group-has-icon">
+				<label for="' . esc_attr( $args['id_password'] ) . '" class="sr-only">' . esc_html( $args['label_password'] ) . '</label>
+				<label for="' . esc_attr( $args['id_password'] ) . '" class="form-control-icon"><i class="jk-font icon-key"></i></label>
+				<input type="password" name="pwd" id="' . esc_attr( $args['id_password'] ) . '" class="form-control" value="" placeholder="'. esc_html( $args['label_password']) .'" />
+			</div>
+			' . $login_form_middle . '
+			' . ( $args['remember'] ? '<div class="checkbox"><label><input name="rememberme" type="checkbox" id="' . esc_attr( $args['id_remember'] ) . '" value="forever"' . ( $args['value_remember'] ? ' checked="checked"' : '' ) . ' /> ' . esc_html( $args['label_remember'] ) . '</label></div>' : '' ) . '
+
+			<input type="submit" name="wp-submit" id="' . esc_attr( $args['id_submit'] ) . '" class="btn-submit-form btn btn-info btn-block" value="' . esc_attr( $args['label_log_in'] ) . '" />
+			<input type="hidden" name="redirect_to" value="' . esc_url( $args['redirect'] ) . '" />
+
+			' . $login_form_bottom . '
+		</form>';
+
+		if ( $args['echo'] )
+			echo $form;
+		else
+			return $form;
+	}
+
+	public function user_login_form( $args=array() ){
+
+		$defaults = array(
+			'echo' => true,
+		);
+
+		$args = wp_parse_args( $args, $defaults );
+
+		$output = '';
+
+		$output .= '<p class="description">登录之后可以参与站内的留言讨论,我们会逐渐加入更多功能,详细情况请看<a href="'. esc_url( site_url('about#features-and-plans') ) .'">这里</a></p>';
+		$output .= '<div class="bg-danger" style="padding: 10px; font-size: 1.5em; font-weight: bolder;">该功能还在开发测试阶段,暂时不可用</div>';
+		$output .= '<a class="login-option btn btn-primary btn-block" onclick="loginToFacebook()">
+						<i class="jk-font icon-facebook-official"></i>
+						<span>使用Facebook登录</span>
+					</a>
+					';
+		$output .= '<a class="login-option btn btn-block btn-warning btn-sina-weibo" onclick="loginToSinaWeibo()">
+						<i class="jk-font icon-sina-weibo"></i>
+						<span>使用新浪微博登录</span>
+					</a>
+					';
+
+		$output .= '<p class="privacy-claim">我们绝不会未经您的允许发帖或泄露您的任何信息</p>';
+
+		if ( $args['echo'] )
+			echo $output;
+		else
+			return $output;
+	}
+
 	// ** Inside the Loop ** //
 	public function posted_meta() {
 		$date = get_the_date();

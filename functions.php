@@ -65,12 +65,12 @@ class JKKellyYuTheme {
 					color: $primary_menu_text_color;
 				 }
 
-				 .nav-tabs>li>a:visited {
+				 nav.main-navigation .nav-tabs>li>a:visited {
 				 	color: $primary_menu_text_color;
 				 }
-				 .nav-tabs>li.active>a:hover,
-				 .nav-tabs>li.active>a:visited,
-				 .nav-tabs>li>a:hover {
+				 nav.main-navigation .nav-tabs>li.active>a:hover,
+				 nav.main-navigation .nav-tabs>li.active>a:visited,
+				 nav.main-navigation .nav-tabs>li>a:hover {
 				 	color: $primary_menu_text_hover_color;
 				 }
 				 "

@@ -110,3 +110,9 @@
 .icon-wechat:before {
   content: "\78";
 }
+.icon-envelope:before {
+  content: "\79";
+}
+.icon-key:before {
+  content: "\7a";
+}

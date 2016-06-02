@@ -1,0 +1,55 @@
+// ** Login Modal ** //
+#modal_login{
+  .form-group-has-icon {
+    position: relative;
+
+    .form-control {
+      padding-left: 2.25em;
+    }
+
+    .form-control-icon {
+      position: absolute;
+      top: 6px; left: 10px;
+      color: darken($super-light-gray, 15%);
+    }
+
+  }
+
+  .btn-submit-form {font-weight: bolder;}
+
+  .modal-body .tab-content {
+    padding: 15px 20px 10px;
+
+    .icon-facebook-official,
+    .icon-sina-weibo {
+      font-size: larger;
+      margin-right: 0.8em;
+    }
+
+    .btn-user-login,
+    .btn-admin-login {
+      font-weight: bolder;
+    }
+
+    .login-option { // login with facebook and weibo buttons
+      font-weight: bolder;
+      text-align: left;
+
+      span {position: relative; top: -3.5px;}
+    }
+
+    .privacy-claim { /* social network privacy claim */
+      font-size: smaller;
+      color: $baseColor-dark;
+      margin: 0.5em 0 0 5%;
+    }
+
+    #tab-admin-login>p { /* Accept "use of terms" and "privacy policy" */
+      color: $baseColor-light;
+      font-size: smaller;
+      margin-top: 10px;
+      margin-left: 5px;
+    }
+  }
+
+}
