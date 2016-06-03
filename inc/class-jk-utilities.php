@@ -314,8 +314,10 @@ class JKFrontendUtilities {
 
 	// ** queried in the audio post format ** //
 	// ** for ximalaya and changba audio ** //
-	public function has_external_audio(){
-		$enabled = get_post_meta(get_the_ID(), '_has_external_track', true);
+	public function has_external_audio( $post_id=null ){
+		if ( is_null($post_id) )
+			$post_id = get_the_ID();
+		$enabled = get_post_meta($post_id, '_has_external_track', true);
 
 		return ($enabled);
 	}
@@ -442,9 +444,10 @@ class JKFrontendUtilities {
 	}*/
 
 	// ** [album image url, mp3 file url, and track name] for audio from ximalaya or changba ** //
-	private function get_audio_data(){
+	public function get_audio_data( $post_id = null ){
 
-		$post_id = get_the_ID();
+		if ( is_null($post_id) )
+			$post_id = get_the_ID();
 
 		$data = get_post_meta($post_id, '_external_track_data', true);
 

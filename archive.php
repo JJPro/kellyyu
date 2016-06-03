@@ -15,7 +15,7 @@ get_header(); ?>
 				
 				<div id="primary" class="content-area">
 					<main id="main" class="site-main" role="main">
-						<?php do_shortcode('[google_ads]'); ?>
+						<?php echo do_shortcode('[google_ads]'); ?>
 
 						<?php
 							if ( have_posts() ) :
@@ -32,8 +32,8 @@ get_header(); ?>
 								/* Start the Loop */
 								while ( have_posts() ) : the_post();
 
-									if ($count == 5){
-										do_shortcode('[google_ads]');
+									if ($count == 1){
+										echo do_shortcode('[google_ads]');
 									}
 									$count++;
 

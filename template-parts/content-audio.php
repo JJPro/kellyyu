@@ -4,7 +4,7 @@ global $jk_utilities;
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'kelly-format-audio' ); ?>>
-	
+	<?php if (is_single()) echo do_shortcode('[google_ads]'); ?>
 	<header class="entry-header text-left">
 		
 		<?php if (is_single()): ?>

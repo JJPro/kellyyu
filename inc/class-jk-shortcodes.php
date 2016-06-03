@@ -9,6 +9,7 @@ class JKShortcodes {
 		$this->video_mix();
 		$this->text_mix();
 		$this->jk_views(); // views count
+		$this->jk_playlist();
 		$this->google_ads();
 	}
 
@@ -81,7 +82,7 @@ class JKShortcodes {
 				if ($matches) {
 					// compose the HTML
 					$vid = $matches[0];
-					$embed_html = '<iframe frameborder="0" width="640" height="498" src="http://v.qq.com/iframe/player.html?vid=' . $vid . '&tiny=1&auto=0" allowfullscreen></iframe>';
+					$embed_html = '<iframe frameborder="0" width="640" height="498" src="http://v.qq.com/iframe/player.html?vid=' . $vid . '&tiny=0&auto=0" allowfullscreen></iframe>';
 				}
 			} elseif ( $video == $atts['facebook'] ) {
 				$embed_html = wp_oembed_get( $video, array('width' => '800', 'height' => '450'));
@@ -155,4 +156,50 @@ class JKShortcodes {
 		});
 	}
 
+	private function jk_playlist() {
+		add_shortcode( 'jk_playlist', function( $atts, $content='' ) {
+			global $jk_utilities;
+
+			// do nothing if input is empty
+			if ( empty( $content ) )
+				return '';
+
+			// Compose playlist
+			$playlist = array();
+			$ids = array_map( 'trim', explode(',', $content) );
+
+			foreach( $ids as $post_id ){
+				// get mp3, title, cover from the post
+				if ( $jk_utilities->frontend->has_external_audio( $post_id ) ){
+
+					$data = $jk_utilities->frontend->get_audio_data($post_id);
+
+					if ($data){
+						$title = $data['title'];
+						$mp3 = $data['mp3'];
+						$cover = is_numeric($data['cover']) ? wp_get_attachment_image_src( $data['cover'], 'full' )[0] : $data['cover'];
+
+						$playlist[] = array(
+							'mp3' => $mp3,
+							'title' => $title,
+							'cover' => $cover,
+							'artist' => 'KELLY于文文',
+						);
+					}
+				}
+			}
+
+			$swfPath = get_template_directory_uri() . '/js/lib/ttw-music-player/jquery-jplayer';
+			$output = '<div class="jk_playlist" data-playlist-id="' . get_the_ID() . '" data-swfPath="' . $swfPath . '"></div>';
+			$output .= '<script>var playlist_' . get_the_ID() . ' = ' . json_encode($playlist) . ';</script>';
+
+			// error_log(print_r($playlist, true));
+			// error_log($output);
+
+			return $output;
+
+
+		});
+
+	}
 }

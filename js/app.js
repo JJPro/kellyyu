@@ -145,6 +145,29 @@
 	});
 
 
+	/**
+	 * TTW Music Player
+	 */
+	// TODO : Continue here
+	$('.jk_playlist').each(function(index, element){
+		initPlaylistPlayer($(element));
+	});
+
+	function initPlaylistPlayer($playlist_wrapper){
+		var playlist_id = $playlist_wrapper.data('playlist-id');
+		var playlist = window['playlist_' + playlist_id];
+		var options = {
+			autoplay: true,
+			buttons: ['playlist', 'settings'],
+			jPlayer: {
+				swfPath: $playlist_wrapper.data('swfPath')
+			}
+		};
+
+		$playlist_wrapper.ttwMusicPlayer(playlist, options);
+	}
+
+
 	// ** All ** //
 	$('[data-toggle="tooltip"]').tooltip({html:true});
 	$('.widget-grid-view-image [data-bump-view="tp"]').tooltip({placement: 'auto', html: true});

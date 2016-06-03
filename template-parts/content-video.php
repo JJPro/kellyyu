@@ -21,6 +21,7 @@ global $jk_utilities;
 		</div>
 
 		<?php echo apply_filters('entry_header', ''); ?>
+		<?php if (is_single()) echo do_shortcode('[google_ads]'); ?>
 
 	</header>
 	

@@ -97,7 +97,7 @@ class JKGoogleIntegration
 						  .google-foot-banner-ads {
 						  	display: block;
 						  }
-						  footer {
+						  .site-footer {
 						  	padding-bottom: 50px;
 						  }
 						}

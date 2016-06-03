@@ -86,6 +86,37 @@ iframe.instagram-media {
     margin-top: 10px;
     margin-left: 5px; }
 
+.jk_playlist {
+  background: #444; }
+  .jk_playlist .ttw-music-player {
+    margin: 0 auto;
+    padding: 20px 0; }
+    .jk_playlist .ttw-music-player .player .album-cover {
+      width: 115px;
+      height: 115px; }
+      .jk_playlist .ttw-music-player .player .album-cover .img {
+        width: 115px;
+        height: 115px; }
+        .jk_playlist .ttw-music-player .player .album-cover .img img {
+          width: 115px;
+          height: 115px; }
+      .jk_playlist .ttw-music-player .player .album-cover .highlight {
+        width: 115px;
+        height: 115px; }
+    .jk_playlist .ttw-music-player .player .title {
+      font-size: 16px; }
+    .jk_playlist .ttw-music-player .player .artist-outer {
+      font-size: 11px; }
+    .jk_playlist .ttw-music-player .player .player-controls {
+      margin-left: 20px;
+      margin-top: 0; }
+    .jk_playlist .ttw-music-player .tracklist {
+      font-size: 14px; }
+      .jk_playlist .ttw-music-player .tracklist .tracks .track .title {
+        width: 95%; }
+      .jk_playlist .ttw-music-player .tracklist .tracks .track .duration {
+        display: none; }
+
 a, a:hover, a:visited, a:focus {
   text-decoration: none; }
 
@@ -675,6 +706,6 @@ div[id^=wpdevar_comment] > span {
     border-color: #A9A9A9 transparent; }
 
 .post.format-standard .post-thumbnail {
-  height: 300px; }
+  padding-bottom: 36%; }
 
 /*# sourceMappingURL=theme-style.css.map */

@@ -31,6 +31,7 @@ global $jk_utilities;
 				<?php echo $jk_utilities->frontend->posted_meta(); ?>
 			</div><!-- .entry-meta -->
 			<?php echo apply_filters('entry_header', ''); ?>
+			<?php echo do_shortcode('[google_ads]'); ?>
 		</header><!-- .entry-header -->
 
 		<div class="entry-content">

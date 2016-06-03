@@ -12,7 +12,6 @@ global $jk_utilities;
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<header class="entry-header text-center">
-		<?php $jk_utilities->frontend->jk_post_thumbnail(); ?>
 
 
 
@@ -30,9 +29,12 @@ global $jk_utilities;
 		</div><!-- .entry-meta -->
 		<?php endif; ?>
 
-		<?php echo apply_filters('entry_header', ''); ?>
+		<?php echo apply_filters('entry_header', ''); // sharedaddy uses this hook ?>
 
 	</header><!-- .entry-header -->
+
+	<?php $jk_utilities->frontend->jk_post_thumbnail(); ?>
+	<?php if (is_single()) echo do_shortcode('[google_ads]'); ?>
 
 	<div class="entry-content">
 		<?php the_content( '继续阅读' ); ?>

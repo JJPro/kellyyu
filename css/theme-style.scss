@@ -3,6 +3,7 @@
 @import "sass_base/shortcode-views-count";
 @import "sass_base/instagram";
 @import "sass_base/login-modal";
+@import "sass_base/ttw-music-player";
 //@import "sass_base/ceaser-easing";
 
 // ** clean links ** //
@@ -343,6 +344,6 @@ div[id^=wpdevar_comment] {
 
 
 // ** Post Thumbnail ** //
-.post.format-standard .post-thumbnail { height: 300px;
+.post.format-standard .post-thumbnail { padding-bottom: 36%;
 }
 

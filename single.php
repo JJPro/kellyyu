@@ -16,7 +16,6 @@ get_header(); ?>
 				<div id="primary" class="content-area">
 					<main id="main" class="site-main" role="main">
 
-					<?php do_shortcode('[google_ads]'); ?>
 					<?php
 						while ( have_posts() ) : the_post();
 
@@ -24,7 +23,7 @@ get_header(); ?>
 
 							the_post_navigation();
 
-							do_shortcode('[google_ads]');
+							echo do_shortcode('[google_ads]');
 
 							// If comments are open or we have at least one comment, load up the comment template.
 							if ( comments_open() || get_comments_number() ) :

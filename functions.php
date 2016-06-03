@@ -45,7 +45,7 @@ class JKKellyYuTheme {
 			// ** Scripts ** //
 			wp_enqueue_script( 'bootstrap', get_template_directory_uri() . '/js/bootstrap.min.js', ['jquery-core'], '3.3.6', true );
 //			wp_enqueue_script( 'audiojs', get_template_directory_uri() . '/js/lib/audiojs/audio.min.js', false, false, true);
-			wp_enqueue_script( 'app_script', get_template_directory_uri() . '/js/app.js', ['jquery-core', 'bootstrap'], false, true);
+			wp_enqueue_script( 'app_script', get_template_directory_uri() . '/js/app.js', ['jquery-core', 'bootstrap', 'ttw-music-player'], false, true);
 
 			// ** Styles ** //
 			wp_enqueue_style( 'bootstrap', get_template_directory_uri() . '/css/bootstrap.min.css', false, '3.3.6', 'all' );
@@ -75,6 +75,13 @@ class JKKellyYuTheme {
 				 }
 				 "
 			);
+
+
+
+			// ** TTW Music Player ** //
+			wp_enqueue_script( 'jplayer', get_template_directory_uri() . '/js/lib/ttw-music-player/jquery-jplayer/jquery.jplayer.js', ['jquery-core'], false, true );
+			wp_enqueue_script( 'ttw-music-player', get_template_directory_uri() . '/js/lib/ttw-music-player/ttw-music-player-min.js', ['jquery-core', 'jplayer'], false, true );
+			wp_enqueue_style( 'ttw-music-player-style', get_template_directory_uri() . '/js/lib/ttw-music-player/css/style.css', false, false, 'all' );
 
 		});
 
